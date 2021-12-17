@@ -1,6 +1,7 @@
 {
   "name": "main",
   "version-string": "latest",
+  "builtin-baseline": "",
   "dependencies": [
     {
       "name": "zstd",
