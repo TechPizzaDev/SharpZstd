@@ -16,6 +16,7 @@ jobs:
   job:
     name: ${{ matrix.os }}-${{ github.workflow }}
     runs-on: ${{ matrix.os }}
+    
     strategy:
       fail-fast: false
       matrix:
@@ -36,25 +37,24 @@ jobs:
         with:
           submodules: true
 
-      #- uses: lukka/get-cmake@latest
-      
-      - name: dir
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: dir
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
         id: runvcpkg
         with:
           vcpkgJsonGlob: 'vcpkg.json'
+          runVcpkgInstall: true
 
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: List $RUNNER_WORKSPACE before build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
       
-      - name: Prints output of run-vcpkg's action.
+      - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
       
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: List $RUNNER_WORKSPACE after build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
