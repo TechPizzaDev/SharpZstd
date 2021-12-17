@@ -1,11 +1,9 @@
 {
   "name": "main",
-  "version-string": "latest",
-  "builtin-baseline": "",
+  "version-semver": "1.5.0",
   "dependencies": [
     {
-      "name": "zstd",
-      "version>=": "1.5.0"
+      "name": "zstd"
     }
   ]
 }
