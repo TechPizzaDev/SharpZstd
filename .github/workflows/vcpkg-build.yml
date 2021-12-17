@@ -47,7 +47,7 @@ jobs:
         with:
           vcpkgJsonGlob: 'vcpkg.json'
           runVcpkgInstall: true
-
+          
       #- name: List $RUNNER_WORKSPACE before build
       #  run: find $RUNNER_WORKSPACE
       #  shell: bash
