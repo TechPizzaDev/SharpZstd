@@ -60,7 +60,7 @@ jobs:
         shell: bash
       
       - name: Zip artifacts
-        run: 7z a ${{ matrix.triplet }}-include.zip .\vcpkg_installed\${{ matrix.triplet }}\include\*
+        run: 7z a ${{ matrix.triplet }}-include.zip vcpkg_installed\${{ matrix.triplet }}\include
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
@@ -91,12 +91,12 @@ jobs:
           name: x64-windows-include.zip
           
       - name: Unzip artifacts
-        run: 7z x x64-windows-include.zip -oartifact_include
+        run: 7z x x64-windows-include.zip -oartifacts
           
       - name: Create sources
         run: | 
-          ClangSharpPInvokeGenerator --file-directory artifact_include "@scripts/GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory artifact_include "@scripts/GenerateZdict.rsp"
+          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
