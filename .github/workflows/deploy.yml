@@ -65,15 +65,14 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: x64-windows-include
-          path: x64-windows-include.zip
+          path: vcpkg_artifacts
           
       - name: Unzip artifacts
         run: |
-          7z x x64-windows.zip -ovcpkg_installed/x64-windows
-          7z x x86-windows.zip -ovcpkg_installed/x86-windows
-          7z x x64-linux.zip -ovcpkg_installed/x64-linux
-          7z x x64-osx.zip -ovcpkg_installed/x64-osx
+          7z x vcpkg_artifacts/x64-windows.zip -ovcpkg_installed/x64-windows
+          7z x vcpkg_artifacts/x86-windows.zip -ovcpkg_installed/x86-windows
+          7z x vcpkg_artifacts/x64-linux.zip -ovcpkg_installed/x64-linux
+          7z x vcpkg_artifacts/x64-osx.zip -ovcpkg_installed/x64-osx
           
       - name: Create sources
         run: | 
