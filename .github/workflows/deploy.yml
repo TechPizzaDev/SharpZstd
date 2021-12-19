@@ -1,30 +1,33 @@
 name: deploy
 on: [workflow_dispatch]
 
+env:
+  VCPKG_INSTALLED_DIR: vcpkg_installed
+
 jobs:
-  windows-x64:
+  vcpkg_windows-x64:
+    runs-on: windows-latest
     - uses: ./.github/workflows/vcpkg
-      os: windows-latest
       triplet: x64-windows
       
-  windows-x86:
+  vcpkg_windows-x86:
+    runs-on: windows-latest
     - uses: ./.github/workflows/vcpkg
-      os: windows-latest
       triplet: x86-windows
-        
-  linux-x64:
+
+  vcpkg_linux-x64:
+    runs-on: linux-latest
     - uses: ./.github/workflows/vcpkg
-      os: linux-latest
       triplet: x64-linux
-        
-  osx-x64:
+      
+  vcpkg_osx-x64:
+    runs-on: osx-latest
     - uses: ./.github/workflows/vcpkg
-      os: osx-latest
       triplet: x64-osx
         
   pack-nuget:
     name: pack-nuget
-    needs: [ windows-x64, windows-x86, linux-x64, osx-x64 ]
+    needs: [ vcpkg_windows-x64, vcpkg_windows-x86, vcpkg_linux-x64, vcpkg_osx-x64 ]
     runs-on: windows-latest
     
     steps:
