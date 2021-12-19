@@ -12,13 +12,13 @@ on: [workflow_dispatch]
 
 jobs:
   vcpkg_build:
-    name: vcpkg-${{ matrix.os }}
+    name: vcpkg-${{ matrix.triplet }}
     runs-on: ${{ matrix.os }}
     
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest, windows-latest]
         include:
           - os: windows-latest
             triplet: x64-windows
@@ -55,18 +55,18 @@ jobs:
       - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
       
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: List $RUNNER_WORKSPACE after build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
       
       - name: Zip artifacts
-        run: tar -cvf ${{ matrix.triplet }}-include.tar vcpkg_installed/${{ matrix.triplet }}/include
+        run: 7z a ${{ matrix.triplet }}-include.zip .\vcpkg_installed\${{ matrix.triplet }}\include
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.triplet }}-include
-          path: ${{ matrix.triplet }}-include.tar
+          path: ${{ matrix.triplet }}-include.zip
         
   pack-nuget:
     name: ${{ github.workflow }}
@@ -89,15 +89,15 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: x64-windows-include
-          path: x64-windows-include.tar
+          path: x64-windows-include.zip
           
       - name: Unzip artifacts
-        run: tar -xvf x64-windows-include.tar
+        run: 7z x x64-windows-include.zip -oartifacts
           
       - name: Create sources
         run: | 
-          ClangSharpPInvokeGenerator --file-directory include "@scripts/GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory include "@scripts/GenerateZdict.rsp"
+          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
