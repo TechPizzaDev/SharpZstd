@@ -24,7 +24,7 @@ jobs:
         triplet: x86-windows
 
   vcpkg_linux-x64:
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,7 +33,7 @@ jobs:
         triplet: x64-linux
       
   vcpkg_osx-x64:
-    runs-on: osx-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
         with:
