@@ -13,8 +13,23 @@
 
   <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/x64-windows/bin/zstd.dll">
-      <PackagePath>runtime/win-x64/native</PackagePath>
+      <PackagePath>runtimes/win-x64/native</PackagePath>
     </None>
+	<None Pack="true" Include="../../../vcpkg_installed/x86-windows/bin/zstd.dll">
+	  <PackagePath>runtimes/win-x86/native</PackagePath>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Pack="true" Include="../../../vcpkg_installed/x64-linux/bin/zstd.dll">
+      <PackagePath>runtimes/linux-x64/native</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Pack="true" Include="../../../vcpkg_installed/x64-osx/bin/zstd.dll">
+	  <PackagePath>runtimes/osx-x64/native</PackagePath>
+	</None>
   </ItemGroup>
 
 </Project>
