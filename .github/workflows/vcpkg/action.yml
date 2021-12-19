@@ -33,6 +33,7 @@ runs:
     
     - name: Print output of run-vcpkg's action.
       run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
+      shell: bash
     
     #- name: List $RUNNER_WORKSPACE after build
     #  run: find $RUNNER_WORKSPACE
@@ -40,7 +41,8 @@ runs:
     
     - name: Zip artifacts
       run: 7z a ${{ inputs.triplet }}-include.zip ./vcpkg_installed/${{ inputs.triplet }}/include/*
-    
+      shell: bash
+      
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
