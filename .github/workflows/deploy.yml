@@ -92,6 +92,7 @@ jobs:
         run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
       - name: Nuget Push 
-        run: dotnet nuget push artifacts/pkg/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
-        
+        working-directory: artifacts/pkg/Release
+        run: dotnet nuget push "*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
+          
       
