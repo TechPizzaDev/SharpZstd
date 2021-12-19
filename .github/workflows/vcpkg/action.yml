@@ -40,11 +40,11 @@ runs:
     #  shell: bash
     
     - name: Zip artifacts
-      run: 7z a ${{ inputs.triplet }}-include.zip ./vcpkg_installed/${{ inputs.triplet }}/include/*
+      run: 7z a ${{ inputs.triplet }}.zip ./vcpkg_installed/${{ inputs.triplet }}/* -r
       shell: bash
       
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ inputs.triplet }}-include
-        path: ${{ inputs.triplet }}-include.zip
+        name: ${{ inputs.triplet }}
+        path: ${{ inputs.triplet }}.zip
