@@ -21,13 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Pack="true" Include="../../../vcpkg_installed/x64-linux/bin/zstd.dll">
+	<None Pack="true" Include="../../../vcpkg_installed/x64-linux/bin/zstd.so">
       <PackagePath>runtimes/linux-x64/native</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-	<None Pack="true" Include="../../../vcpkg_installed/x64-osx/bin/zstd.dll">
+	<None Pack="true" Include="../../../vcpkg_installed/x64-osx/bin/zstd.dylib">
 	  <PackagePath>runtimes/osx-x64/native</PackagePath>
 	</None>
   </ItemGroup>
