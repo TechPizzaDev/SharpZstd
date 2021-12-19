@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Pack="true" Include="../../../vcpkg_installed/x64-linux/lib/libzstd.1.5.0.so">
+    <None Pack="true" Include="../../../vcpkg_installed/x64-linux/lib/libzstd.so.1.5.0">
       <PackagePath>runtimes/linux-x64/native</PackagePath>
     </None>
   </ItemGroup>
