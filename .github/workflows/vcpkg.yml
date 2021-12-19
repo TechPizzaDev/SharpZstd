@@ -21,11 +21,6 @@ env:
 runs: 
   using: "composite"
   steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        submodules: true
-
     #- name: List $RUNNER_WORKSPACE before build
     #  run: find $RUNNER_WORKSPACE
     #  shell: bash

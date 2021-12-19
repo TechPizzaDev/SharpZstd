@@ -7,23 +7,39 @@ env:
 jobs:
   vcpkg_windows-x64:
     runs-on: windows-latest
-    - uses: ./.github/workflows/vcpkg
-      triplet: x64-windows
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: ./.github/workflows/vcpkg
+        triplet: x64-windows
       
   vcpkg_windows-x86:
     runs-on: windows-latest
-    - uses: ./.github/workflows/vcpkg
-      triplet: x86-windows
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: ./.github/workflows/vcpkg
+        triplet: x86-windows
 
   vcpkg_linux-x64:
     runs-on: linux-latest
-    - uses: ./.github/workflows/vcpkg
-      triplet: x64-linux
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: ./.github/workflows/vcpkg
+        triplet: x64-linux
       
   vcpkg_osx-x64:
     runs-on: osx-latest
-    - uses: ./.github/workflows/vcpkg
-      triplet: x64-osx
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: ./.github/workflows/vcpkg
+        triplet: x64-osx
         
   pack-nuget:
     name: pack-nuget
