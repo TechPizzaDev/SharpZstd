@@ -3,8 +3,8 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFramework>netstandard2.0</TargetFramework>
-	<IncludeSymbols>true</IncludeSymbols>
-	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,22 +15,31 @@
     <None Pack="true" Include="../../../vcpkg_installed/x64-windows/bin/zstd.dll">
       <PackagePath>runtimes/win-x64/native</PackagePath>
     </None>
-	<None Pack="true" Include="../../../vcpkg_installed/x86-windows/bin/zstd.dll">
-	  <PackagePath>runtimes/win-x86/native</PackagePath>
-	</None>
+    <None Pack="true" Include="../../../vcpkg_installed/x64-windows/bin/zstd.pdb">
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-	<None Pack="true" Include="../../../vcpkg_installed/x64-linux/bin/zstd.so">
+    <None Pack="true" Include="../../../vcpkg_installed/x86-windows/bin/zstd.dll">
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+    </None>
+    <None Pack="true" Include="../../../vcpkg_installed/x86-windows/bin/zstd.pdb">
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Pack="true" Include="../../../vcpkg_installed/x64-linux/lib/libzstd.1.5.0.so">
       <PackagePath>runtimes/linux-x64/native</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-	<None Pack="true" Include="../../../vcpkg_installed/x64-osx/bin/zstd.dylib">
-	  <PackagePath>runtimes/osx-x64/native</PackagePath>
-	</None>
+    <None Pack="true" Include="../../../vcpkg_installed/x64-osx/lib/libzstd.1.5.0.dylib">
+      <PackagePath>runtimes/osx-x64/native</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
-	
+    
