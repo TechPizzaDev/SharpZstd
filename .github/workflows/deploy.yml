@@ -31,6 +31,7 @@ jobs:
 
     env:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
 
     steps:
       - name: Checkout
@@ -48,8 +49,6 @@ jobs:
         with:
           vcpkgJsonGlob: 'vcpkg.json'
           runVcpkgInstall: true
-          binaryCachePath: bincacheORISIT
-          additionalCachedPaths: vcpkg_installed
       
       - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
