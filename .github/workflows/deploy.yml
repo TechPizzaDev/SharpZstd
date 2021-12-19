@@ -12,7 +12,7 @@ on: [workflow_dispatch]
 
 jobs:
   vcpkg_build:
-    name: ${{ matrix.os }}-${{ github.workflow }}
+    name: vcpkg-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     
     strategy:
@@ -59,9 +59,9 @@ jobs:
       - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
       
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: List $RUNNER_WORKSPACE after build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
         
   pack-nuget:
     name: ${{ github.workflow }}
@@ -82,8 +82,8 @@ jobs:
           
       - name: Create sources
         run: | 
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@GenerateZdict.rsp"
+          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@scripts/GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@scripts/GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
