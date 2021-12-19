@@ -31,7 +31,7 @@ jobs:
 
     env:
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
-      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
+      VCPKG_INSTALLED_DIR: vcpkg_installed
 
     steps:
       - name: Checkout
@@ -53,9 +53,9 @@ jobs:
       - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
       
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: List $RUNNER_WORKSPACE after build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
       
       - name: Zip artifacts
         run: 7z a ${{ matrix.triplet }}-include.zip vcpkg_installed/${{ matrix.triplet }}/include
