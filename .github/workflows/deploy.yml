@@ -41,7 +41,7 @@ jobs:
         with:
           submodules: true
 
-      #- name: dir
+      #- name: List $RUNNER_WORKSPACE before build
       #  run: find $RUNNER_WORKSPACE
       #  shell: bash
 
@@ -51,13 +51,18 @@ jobs:
         with:
           vcpkgJsonGlob: 'vcpkg.json'
           runVcpkgInstall: true
-          
-      #- name: List $RUNNER_WORKSPACE before build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
       
       - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
+      
+      - name: Zip artifacts
+        run: 7z a ${{ matrix.triplet }}-include.zip vcpkg_installed/${{ matrix.triplet }}/include/*
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.triplet }}-include.zip
+          path: ${{ matrix.triplet }}-include.zip
       
       #- name: List $RUNNER_WORKSPACE after build
       #  run: find $RUNNER_WORKSPACE
@@ -80,10 +85,18 @@ jobs:
       - name: Install .NET tools
         run: dotnet tool install --global ClangSharpPInvokeGenerator --version 13.0.0-beta1
           
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: x64-windows-include.zip
+          
+      - name: Unzip artifacts
+        run: 7z x x64-windows-include.zip -o\artifact_include
+          
       - name: Create sources
         run: | 
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@scripts/GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@scripts/GenerateZdict.rsp"
+          ClangSharpPInvokeGenerator --file-directory artifact_include "@scripts/GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory artifact_include "@scripts/GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
