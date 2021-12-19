@@ -76,8 +76,8 @@ jobs:
           
       - name: Create sources
         run: | 
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-windows "@scripts/GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-windows "@scripts/GenerateZdict.rsp"
+          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-windows/include "@scripts/GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-windows/include "@scripts/GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
