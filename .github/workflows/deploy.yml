@@ -90,12 +90,12 @@ jobs:
           path: x64-windows-include.zip
           
       - name: Unzip artifacts
-        run: 7z x x64-windows-include.zip -oartifacts
+        run: 7z x x64-windows-include.zip -oinclude_artifacts
           
       - name: Create sources
         run: | 
-          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZdict.rsp"
+          ClangSharpPInvokeGenerator --file-directory include_artifacts "@scripts/GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory include_artifacts "@scripts/GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
