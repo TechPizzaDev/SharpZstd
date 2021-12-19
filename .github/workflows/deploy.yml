@@ -60,13 +60,13 @@ jobs:
         shell: bash
       
       - name: Zip artifacts
-        run: 7z a ${{ matrix.triplet }}-include.zip vcpkg_installed\${{ matrix.triplet }}\include
+        run: tar -cvf ${{ matrix.triplet }}-include.tar /vcpkg_installed/${{ matrix.triplet }}/include
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.triplet }}-include.zip
-          path: ${{ matrix.triplet }}-include.zip
+          name: ${{ matrix.triplet }}-include
+          path: ${{ matrix.triplet }}-include.tar
         
   pack-nuget:
     name: ${{ github.workflow }}
@@ -88,15 +88,16 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: x64-windows-include.zip
+          name: x64-windows-include
+          path: x64-windows-include.tar
           
       - name: Unzip artifacts
-        run: 7z x x64-windows-include.zip -oartifacts
+        run: tar -xvf x64-windows-include.tar
           
       - name: Create sources
         run: | 
-          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory artifacts/include "@scripts/GenerateZdict.rsp"
+          ClangSharpPInvokeGenerator --file-directory include "@scripts/GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory include "@scripts/GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
