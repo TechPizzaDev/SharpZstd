@@ -1,74 +1,30 @@
-# Copyright (c) 2019-2020-2021 Luca Cappa
-# Released under the term specified in file LICENSE.txt
-# SPDX short identifier: MIT
-#
-# The peculiarity of this workflow is that assumes vcpkg stored as a submodule of this repository.
-# This workflow does the following:
-# - Restores vcpkg artifacts from cache.
-# - Sets up vcpkg if needed. Will automatically run vcpkg to install dependencies
-#   described by the vcpkg.json manifest file. It will be a no-op if those are restored from cache.
 name: deploy
 on: [workflow_dispatch]
 
 jobs:
-  vcpkg_build:
-    name: vcpkg-${{ matrix.triplet }}
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        include:
-          - os: windows-latest
-            triplet: x64-windows
-            
-          - os: ubuntu-latest
-            triplet: x64-linux
-            
-          - os: macos-latest
-            triplet: x64-osx
-
-    env:
-      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
-      VCPKG_INSTALLED_DIR: vcpkg_installed
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      #- name: List $RUNNER_WORKSPACE before build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
-
-      - name: Restore artifacts, or setup vcpkg for building artifacts
-        uses: lukka/run-vcpkg@v10
-        id: runvcpkg
-        with:
-          vcpkgJsonGlob: 'vcpkg.json'
-          runVcpkgInstall: true
+  windows-x64:
+    - uses: ./.github/actions/vcpkg
+      os: windows-latest
+      triplet: x64-windows
       
-      - name: Print output of run-vcpkg's action.
-        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
-      
-      #- name: List $RUNNER_WORKSPACE after build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
-      
-      - name: Zip artifacts
-        run: 7z a ${{ matrix.triplet }}-include.zip ./vcpkg_installed/${{ matrix.triplet }}/include/*
-      
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.triplet }}-include
-          path: ${{ matrix.triplet }}-include.zip
+  windows-x86:
+    - uses: ./.github/actions/vcpkg
+      os: windows-latest
+      triplet: x86-windows
+        
+  linux-x64:
+    - uses: ./.github/actions/vcpkg
+      os: linux-latest
+      triplet: x64-linux
+        
+  osx-x64:
+    - uses: ./.github/actions/vcpkg
+      os: osx-latest
+      triplet: x64-osx
         
   pack-nuget:
     name: pack-nuget
-    needs: vcpkg_build
+    needs: [ windows-x64, windows-x86, linux-x64, osx-x64 ]
     runs-on: windows-latest
     
     steps:
@@ -101,13 +57,13 @@ jobs:
         run: dotnet restore
       
       - name: Build
-        run: dotnet -c Release build --no-restore 
+        run: dotnet build -c Release --no-restore 
         
       - name: Test
-        run: dotnet -c Release test --no-restore --no-build
+        run: dotnet test -c Release --no-restore --no-build
        
       - name: Pack
-        run: dotnet -c Release pack --no-restore --no-build --verbosity normal
+        run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
       - name: Nuget Push 
         run: dotnet nuget push artifacts/pkg/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
