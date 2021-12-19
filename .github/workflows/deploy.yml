@@ -81,8 +81,9 @@ jobs:
         run: dotnet tool install --global ClangSharpPInvokeGenerator --version 13.0.0-beta1
           
       - name: Create sources
-        run: ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@GenerateZstd.rsp"
-        run: ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@GenerateZdict.rsp"
+        run: | 
+          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@GenerateZstd.rsp"
+          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-linux/include "@GenerateZdict.rsp"
       
       - name: Restore
         run: dotnet restore
