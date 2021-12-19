@@ -67,7 +67,7 @@ jobs:
           path: ${{ matrix.triplet }}-include.zip
         
   pack-nuget:
-    name: ${{ github.workflow }}
+    name: pack-nuget
     needs: vcpkg_build
     runs-on: windows-latest
     
