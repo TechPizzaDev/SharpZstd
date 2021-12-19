@@ -18,13 +18,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         include:
           - os: windows-latest
             triplet: x64-windows
-            
-          - os: windows-latest
-            triplet: x86-windows
             
           - os: ubuntu-latest
             triplet: x64-linux
@@ -55,12 +52,12 @@ jobs:
       - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
       
-      #- name: List $RUNNER_WORKSPACE after build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
       
       - name: Zip artifacts
-        run: 7z a ${{ matrix.triplet }}-include.zip .\vcpkg_installed\${{ matrix.triplet }}\include
+        run: 7z a ${{ matrix.triplet }}-include.zip .\..\b\vcpkg_installed\${{ matrix.triplet }}\include
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
