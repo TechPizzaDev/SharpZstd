@@ -15,9 +15,6 @@ inputs:
     required: true
 outputs: {}
 
-env:
-  VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
-  
 runs: 
   using: "composite"
   steps:
@@ -31,6 +28,8 @@ runs:
       with:
         vcpkgJsonGlob: 'vcpkg.json'
         runVcpkgInstall: true
+      env:
+        VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
     - name: Print output of run-vcpkg's action.
       run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
