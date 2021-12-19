@@ -12,7 +12,8 @@ jobs:
         with:
           submodules: true
       - uses: ./.github/workflows/vcpkg
-        triplet: x64-windows
+        with:
+          triplet: x64-windows
       
   vcpkg_windows-x86:
     runs-on: windows-latest
@@ -21,7 +22,8 @@ jobs:
         with:
           submodules: true
       - uses: ./.github/workflows/vcpkg
-        triplet: x86-windows
+        with:
+          triplet: x86-windows
 
   vcpkg_linux-x64:
     runs-on: ubuntu-latest
@@ -30,7 +32,8 @@ jobs:
         with:
           submodules: true
       - uses: ./.github/workflows/vcpkg
-        triplet: x64-linux
+        with:
+          triplet: x64-linux
       
   vcpkg_osx-x64:
     runs-on: macos-latest
@@ -39,7 +42,8 @@ jobs:
         with:
           submodules: true
       - uses: ./.github/workflows/vcpkg
-        triplet: x64-osx
+        with:
+          triplet: x64-osx
         
   pack-nuget:
     name: pack-nuget
