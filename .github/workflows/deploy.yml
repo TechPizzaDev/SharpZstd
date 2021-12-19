@@ -58,7 +58,7 @@ jobs:
       #  shell: bash
       
       - name: Zip artifacts
-        run: 7z a ${{ matrix.triplet }}-include.zip vcpkg_installed/${{ matrix.triplet }}/include
+        run: 7z a ${{ matrix.triplet }}-include.zip ./vcpkg_installed/${{ matrix.triplet }}/include/*
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
