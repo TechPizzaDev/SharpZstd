@@ -11,51 +11,39 @@
 name: vcpkg
 
 inputs:
-  os:
-    required: true
   triplet:
     required: true
 outputs: {}
 
+env:
+  VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
+  
 runs: 
   using: "composite"
   steps:
-    name: vcpkg-${{ inputs.triplet }}
-    runs-on: ${{ inputs.os }}
+    #- name: List $RUNNER_WORKSPACE before build
+    #  run: find $RUNNER_WORKSPACE
+    #  shell: bash
+
+    - name: Restore artifacts, or setup vcpkg for building artifacts
+      uses: lukka/run-vcpkg@v10
+      id: runvcpkg
+      with:
+        vcpkgJsonGlob: 'vcpkg.json'
+        runVcpkgInstall: true
     
-    env:
-      VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
-      VCPKG_INSTALLED_DIR: vcpkg_installed
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      #- name: List $RUNNER_WORKSPACE before build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
-
-      - name: Restore artifacts, or setup vcpkg for building artifacts
-        uses: lukka/run-vcpkg@v10
-        id: runvcpkg
-        with:
-          vcpkgJsonGlob: 'vcpkg.json'
-          runVcpkgInstall: true
-      
-      - name: Print output of run-vcpkg's action.
-        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
-      
-      #- name: List $RUNNER_WORKSPACE after build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
-      
-      - name: Zip artifacts
-        run: 7z a ${{ inputs.triplet }}-include.zip ./vcpkg_installed/${{ inputs.triplet }}/include/*
-      
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ inputs.triplet }}-include
-          path: ${{ inputs.triplet }}-include.zip
+    - name: Print output of run-vcpkg's action.
+      run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
+    
+    #- name: List $RUNNER_WORKSPACE after build
+    #  run: find $RUNNER_WORKSPACE
+    #  shell: bash
+    
+    - name: Zip artifacts
+      run: 7z a ${{ inputs.triplet }}-include.zip ./vcpkg_installed/${{ inputs.triplet }}/include/*
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.triplet }}-include
+        path: ${{ inputs.triplet }}-include.zip
