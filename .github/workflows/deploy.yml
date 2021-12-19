@@ -60,7 +60,7 @@ jobs:
         shell: bash
       
       - name: Zip artifacts
-        run: tar -cvf ${{ matrix.triplet }}-include.tar /vcpkg_installed/${{ matrix.triplet }}/include
+        run: tar -cvf ${{ matrix.triplet }}-include.tar vcpkg_installed/${{ matrix.triplet }}/include
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
