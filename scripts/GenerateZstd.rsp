@@ -1,0 +1,16 @@
+@scripts/GenerateBase.rsp
+
+--file
+zstd.h
+zstd_errors.h
+
+--methodClassName
+Zstd
+
+--remap
+ZSTD_CCtx_s=ZSTD_CCtx
+ZSTD_DCtx_s=ZSTD_DCtx
+ZSTD_inBuffer_s=ZSTD_inBuffer
+ZSTD_outBuffer_s=ZSTD_outBuffer
+ZSTD_CDict_s=ZSTD_CDict
+ZSTD_DDict_s=ZSTD_DDict

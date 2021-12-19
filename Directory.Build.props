@@ -24,6 +24,7 @@
     <DebugType>embedded</DebugType>
     <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
     <Nullable>enable</Nullable>
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>fakse</SignAssembly>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>

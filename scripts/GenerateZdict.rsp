@@ -1,0 +1,7 @@
+@scripts/GenerateBase.rsp
+
+--file
+zdict.h
+
+--methodClassName
+Zdict
