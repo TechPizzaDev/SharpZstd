@@ -55,18 +55,18 @@ jobs:
       - name: Print output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
       
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+      
       - name: Zip artifacts
-        run: 7z a ${{ matrix.triplet }}-include.zip vcpkg_installed/${{ matrix.triplet }}/include/*
+        run: 7z a ${{ matrix.triplet }}-include.zip ./vcpkg_installed/${{ matrix.triplet }}/include/*
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.triplet }}-include.zip
           path: ${{ matrix.triplet }}-include.zip
-      
-      #- name: List $RUNNER_WORKSPACE after build
-      #  run: find $RUNNER_WORKSPACE
-      #  shell: bash
         
   pack-nuget:
     name: ${{ github.workflow }}
@@ -91,7 +91,7 @@ jobs:
           name: x64-windows-include.zip
           
       - name: Unzip artifacts
-        run: 7z x x64-windows-include.zip -o\artifact_include
+        run: 7z x x64-windows-include.zip -oartifact_include
           
       - name: Create sources
         run: | 
