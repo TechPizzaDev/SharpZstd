@@ -91,9 +91,19 @@ jobs:
       - name: Pack
         run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
+      - name: Zip Nuget artifact
+        run: 7z a pkg.Release.zip ./artifacts/pkg/Release/* -r
+        shell: bash
+
+      - name: Upload Nuget artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pkg.Release
+          path: pkg.Release.zip
+        
       - name: Nuget Push 
+        if: false
         working-directory: artifacts/pkg/Release
-        if: true
         run: dotnet nuget push "*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
           
       
