@@ -26,7 +26,6 @@
       "displayName": "Ninja Multi-Config Configure Settings",
       "description": "Configure with vcpkg toolchain",
       "binaryDir": "${sourceDir}/builds/${presetName}",
-      "generator": "Ninja Multi-Config",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": {
           "type": "FILEPATH",
