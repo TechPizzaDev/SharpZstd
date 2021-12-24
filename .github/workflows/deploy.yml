@@ -102,7 +102,7 @@ jobs:
           path: pkg.Release.zip
         
       - name: Nuget Push 
-        if: false
+        if: true
         working-directory: artifacts/pkg/Release
         run: dotnet nuget push "*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
           
