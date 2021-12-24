@@ -28,7 +28,6 @@ runs:
         vcpkgJsonGlob: 'vcpkg.json'
       env:
         VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
-        VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
     
     - name: Print output of run-vcpkg's action.
       run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
@@ -40,7 +39,9 @@ runs:
         # This is the name of the CMakePresets.json's configuration to use to generate
         # the project files. This configuration leverages the vcpkg.cmake toolchain file to
         # run vcpkg and install all dependencies specified in vcpkg.json.
-        configurePreset: 'ninja-multi-vcpkg'
+        configurePreset: 'vcpkg'
+      env:
+        VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
     
     - name: List $RUNNER_WORKSPACE after build
       run: find $RUNNER_WORKSPACE
