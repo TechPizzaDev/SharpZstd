@@ -48,7 +48,7 @@ jobs:
   pack-nuget:
     name: pack-nuget
     needs: [ vcpkg_windows-x64, vcpkg_windows-x86, vcpkg_linux-x64, vcpkg_osx-x64 ]
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout
@@ -91,8 +91,38 @@ jobs:
       - name: Pack
         run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
-      - name: Nuget Push 
-        working-directory: artifacts/pkg/Release
-        run: dotnet nuget push "*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
+      - name: Zip artifact
+        run: 7z a pkg.release ./artifacts/pkg/Release/* -r
+        shell: bash
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pkg.release
+        
+  push-nuget:
+    name: push-nuget
+    needs: [ pack-nuget ]
+    runs-on: ubuntu-latest
+    if: false
+    
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: pkg.release
+          path: artifacts/pkg.release
+          
+      - name: Unzip artifact
+        run: |
+          7z x artifacts/pkg.release -oartifacts/pkg/Release
+          
+      - name: List $RUNNER_WORKSPACE before build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+    
+      #- name: Nuget Push 
+      #  working-directory: artifacts/pkg/Release
+      #  run: dotnet nuget push "*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
           
       
