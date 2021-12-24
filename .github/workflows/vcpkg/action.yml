@@ -29,10 +29,6 @@ runs:
       env:
         VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
-    - name: Print output of run-vcpkg's action.
-      run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
-      shell: bash
-      
     - name: Run CMake (consuming CMakePreset.json and vcpkg.json by vcpkg)
       uses: lukka/run-cmake@v10
       with:
@@ -41,11 +37,12 @@ runs:
         # run vcpkg and install all dependencies specified in vcpkg.json.
         configurePreset: 'vcpkg'
       env:
+        VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
         VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
     
-    - name: List $RUNNER_WORKSPACE after build
-      run: find $RUNNER_WORKSPACE
-      shell: bash
+    #- name: List $RUNNER_WORKSPACE after build
+    #  run: find $RUNNER_WORKSPACE
+    #  shell: bash
     
     - name: Zip artifacts
       run: 7z a ${{ inputs.triplet }}.zip ./vcpkg_installed/${{ inputs.triplet }}/* -r

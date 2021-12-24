@@ -11,6 +11,7 @@
       "displayName": "Configure Vcpkg",
       "description": "Configure vcpkg toolchain",
       "binaryDir": "${sourceDir}",
+	    "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": {
           "type": "FILEPATH",
