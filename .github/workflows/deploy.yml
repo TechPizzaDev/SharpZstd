@@ -73,6 +73,13 @@ jobs:
           7z x vcpkg_artifacts/x86-windows -ovcpkg_installed/x86-windows
           7z x vcpkg_artifacts/x64-linux -ovcpkg_installed/x64-linux
           7z x vcpkg_artifacts/x64-osx -ovcpkg_installed/x64-osx
+      
+      - name: Fixup artifact names
+        shell: bash
+        working-directory: './vcpkg_installed'
+        run: |
+          mv ./x64-linux/lib/libzstd.so.1.5.0 ./x64-linux/lib/zstd.so
+          mv ./x64-osx/lib/libzstd.1.5.0.dylib ./x64-osx/lib/zstd.dylib
           
       - name: Create sources
         run: | 
@@ -93,7 +100,6 @@ jobs:
         
       - name: Zip Nuget artifact
         run: 7z a pkg.Release.zip ./artifacts/pkg/Release/* -r
-        shell: bash
 
       - name: Upload Nuget artifact
         uses: actions/upload-artifact@v2

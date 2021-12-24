@@ -31,14 +31,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Pack="true" Include="../../../vcpkg_installed/x64-linux/lib/libzstd.so.1.5.0">
-      <PackagePath>runtimes/linux-x64/native/zstd.so</PackagePath>
+    <None Pack="true" Include="../../../vcpkg_installed/x64-linux/lib/zstd.so">
+      <PackagePath>runtimes/linux-x64/native</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <None Pack="true" Include="../../../vcpkg_installed/x64-osx/lib/libzstd.1.5.0.dylib">
-      <PackagePath>runtimes/osx-x64/native/zstd.dylib</PackagePath>
+    <None Pack="true" Include="../../../vcpkg_installed/x64-osx/lib/zstd.dylib">
+      <PackagePath>runtimes/osx-x64/native</PackagePath>
     </None>
   </ItemGroup>
 
