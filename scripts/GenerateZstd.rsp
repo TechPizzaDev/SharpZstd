@@ -14,3 +14,5 @@ ZSTD_inBuffer_s=ZSTD_inBuffer
 ZSTD_outBuffer_s=ZSTD_outBuffer
 ZSTD_CDict_s=ZSTD_CDict
 ZSTD_DDict_s=ZSTD_DDict
+POOL_ctx_s=ZSTD_threadPool
+ZSTD_CCtx_params_s=ZSTD_CCtx_params

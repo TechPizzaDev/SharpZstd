@@ -7,6 +7,9 @@ unix-types
 generate-helper-types
 log-potential-typedef-remappings
 
+--define-macro
+ZSTD_STATIC_LINKING_ONLY
+
 --exclude
 CINDEX_VERSION_ENCODE
 CINDEX_VERSION_STRINGIZE
