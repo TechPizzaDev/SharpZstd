@@ -78,8 +78,8 @@ jobs:
         shell: bash
         working-directory: './vcpkg_installed'
         run: |
-          mv ./x64-linux/lib/libzstd.so.1.5.0 ./x64-linux/lib/zstd.so
-          mv ./x64-osx/lib/libzstd.1.5.0.dylib ./x64-osx/lib/zstd.dylib
+          mv ./x64-linux/lib/libzstd.so.1.5.2 ./x64-linux/lib/zstd.so
+          mv ./x64-osx/lib/libzstd.1.5.2.dylib ./x64-osx/lib/zstd.dylib
           
       - name: Create sources
         run: | 
