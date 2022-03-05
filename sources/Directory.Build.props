@@ -11,7 +11,6 @@
   -->
 
   <PropertyGroup>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <SharpZstdProjectCategory>sources</SharpZstdProjectCategory>
   </PropertyGroup>
 
@@ -21,8 +20,5 @@
     <InternalsVisibleTo Include="$(MSBuildProjectName).UnitTests" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" IsImplicitlyDefined="true" PrivateAssets="all" />
-  </ItemGroup>
 
 </Project>
