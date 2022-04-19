@@ -1,5 +1,7 @@
 name: deploy
-on: [workflow_dispatch]
+on:
+  create: # when tags are created
+  workflow_dispatch: # clickable button in CI manager
 
 env:
   VCPKG_INSTALLED_DIR: vcpkg_installed
@@ -108,7 +110,7 @@ jobs:
           path: pkg.Release.zip
         
       - name: Nuget Push 
-        if: true
+        if: startsWith(github.ref, 'refs/tags/')
         working-directory: artifacts/pkg/Release
         run: dotnet nuget push "*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_TOKEN }} --skip-duplicate
           
