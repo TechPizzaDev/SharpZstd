@@ -36,6 +36,9 @@ jobs:
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-linux
+        env:
+           CFLAGS: "-Xlinker -Bsymbolic"
+           LDFLAGS: "-Xlinker -Bsymbolic"
       
   vcpkg_osx-x64:
     runs-on: macos-latest
