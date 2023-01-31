@@ -61,6 +61,7 @@
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <RepositoryType>git</RepositoryType>
+    <PackageTags>zstd zstandard compression</PackageTags>
   </PropertyGroup>
 
 </Project>
