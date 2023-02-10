@@ -35,9 +35,7 @@ runs:
         # the project files. This configuration leverages the vcpkg.cmake toolchain file to
         # run vcpkg and install all dependencies specified in vcpkg.json.
         configurePreset: 'vcpkg'
-      env:
-        VCPKG_TARGET_TRIPLET: ${{ inputs.triplet }}
-        VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
+        configurePresetAdditionalArgs: ['-DVCPKG_TARGET_TRIPLET=${{ inputs.triplet }}', '-DVCPKG_OVERLAY_TRIPLETS=custom-triplets']
     
     #- name: List $RUNNER_WORKSPACE after build
     #  run: find $RUNNER_WORKSPACE
