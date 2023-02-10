@@ -17,6 +17,11 @@ outputs: {}
 
 runs: 
   using: "composite"
+  
+  env:
+    VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
+    VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
+      
   steps:
     - name: Setup cmake
       uses: lukka/get-cmake@latest
@@ -28,14 +33,17 @@ runs:
         vcpkgJsonGlob: 'vcpkg.json'
         appendedCacheKey: ${{ inputs.triplet }}
     
+    - name: Prints output of run-vcpkg's action.
+        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
+    
     - name: Run CMake (consuming CMakePreset.json and vcpkg.json by vcpkg)
       uses: lukka/run-cmake@v10
+      id: runcmake
       with:
-        # This is the name of the CMakePresets.json's configuration to use to generate
-        # the project files. This configuration leverages the vcpkg.cmake toolchain file to
-        # run vcpkg and install all dependencies specified in vcpkg.json.
-        configurePreset: 'vcpkg'
-        configurePresetAdditionalArgs: ['-DVCPKG_TARGET_TRIPLET=${{ inputs.triplet }}', '-DVCPKG_OVERLAY_TRIPLETS=custom-triplets']
+        cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+        configurePreset: 'ninja-multi-vcpkg'
+        buildPreset: 'ninja-multi-vcpkg'
+        buildPresetAdditionalArgs: '[`--config Release`]'
     
     #- name: List $RUNNER_WORKSPACE after build
     #  run: find $RUNNER_WORKSPACE
