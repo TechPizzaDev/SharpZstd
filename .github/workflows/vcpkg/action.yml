@@ -27,8 +27,6 @@ runs:
       with:
         vcpkgJsonGlob: 'vcpkg.json'
         appendedCacheKey: ${{ inputs.triplet }}
-      env:
-        VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
     - name: Run CMake (consuming CMakePreset.json and vcpkg.json by vcpkg)
       uses: lukka/run-cmake@v10
@@ -38,7 +36,7 @@ runs:
         # run vcpkg and install all dependencies specified in vcpkg.json.
         configurePreset: 'vcpkg'
       env:
-        VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
+        VCPKG_TARGET_TRIPLET: ${{ inputs.triplet }}
         VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
     
     #- name: List $RUNNER_WORKSPACE after build
