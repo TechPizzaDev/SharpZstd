@@ -31,14 +31,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Pack="true" Include="../../../vcpkg_installed/arm64-windows/bin/zstd.dll">
+      <PackagePath>runtimes/win-arm64/native</PackagePath>
+    </None>
+    <None Pack="true" Include="../../../vcpkg_installed/arm64-windows/bin/zstd.pdb">
+      <PackagePath>runtimes/win-arm64/native</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/x64-linux/lib/zstd.so">
       <PackagePath>runtimes/linux-x64/native</PackagePath>
+    </None>
+    <None Pack="true" Include="../../../vcpkg_installed/arm64-linux/lib/zstd.so">
+      <PackagePath>runtimes/linux-arm64/native</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/x64-osx/lib/zstd.dylib">
       <PackagePath>runtimes/osx-x64/native</PackagePath>
+    </None>
+    <None Pack="true" Include="../../../vcpkg_installed/arm64-osx/lib/zstd.dylib">
+      <PackagePath>runtimes/osx-arm64/native</PackagePath>
     </None>
   </ItemGroup>
 

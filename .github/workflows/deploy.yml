@@ -13,19 +13,19 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+          fetch-depth: 0
+
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-windows
       
-  vcpkg_windows-x86:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x86-windows
+
+      - uses: ./.github/workflows/vcpkg
+        with:
+          triplet: arm64-windows
 
   vcpkg_linux-x64:
     runs-on: ubuntu-latest
@@ -33,9 +33,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+          fetch-depth: 0
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-linux
+        env:
+           CFLAGS: "-Xlinker -Bsymbolic"
+           LDFLAGS: "-Xlinker -Bsymbolic"
+           
+      - uses: ./.github/workflows/vcpkg
+        with:
+          triplet: arm64-linux
         env:
            CFLAGS: "-Xlinker -Bsymbolic"
            LDFLAGS: "-Xlinker -Bsymbolic"
@@ -46,13 +54,18 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+          fetch-depth: 0
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-osx
+      
+      - uses: ./.github/workflows/vcpkg
+        with:
+          triplet: arm64-osx
         
   pack-nuget:
     name: pack-nuget
-    needs: [ vcpkg_windows-x64, vcpkg_windows-x86, vcpkg_linux-x64, vcpkg_osx-x64 ]
+    needs: [ vcpkg_windows-x64, vcpkg_linux-x64, vcpkg_osx-x64 ]
     runs-on: windows-latest
     
     steps:
@@ -77,14 +90,19 @@ jobs:
           7z x vcpkg_artifacts/x64-windows -ovcpkg_installed/x64-windows
           7z x vcpkg_artifacts/x86-windows -ovcpkg_installed/x86-windows
           7z x vcpkg_artifacts/x64-linux -ovcpkg_installed/x64-linux
+          7z x vcpkg_artifacts/arm64-linux -ovcpkg_installed/arm64-linux
           7z x vcpkg_artifacts/x64-osx -ovcpkg_installed/x64-osx
+          7z x vcpkg_artifacts/arm64-osx -ovcpkg_installed/arm64-osx
       
       - name: Fixup artifact names
         shell: bash
         working-directory: './vcpkg_installed'
         run: |
           mv ./x64-linux/lib/libzstd.so.1.5.2 ./x64-linux/lib/zstd.so
+          mv ./arm64-linux/lib/libzstd.so.1.5.2 ./arm64-linux/lib/zstd.so
+
           mv ./x64-osx/lib/libzstd.1.5.2.dylib ./x64-osx/lib/zstd.dylib
+          mv ./arm64-osx/lib/libzstd.1.5.2.dylib ./arm64-osx/lib/zstd.dylib
           
       - name: Create sources
         run: | 
