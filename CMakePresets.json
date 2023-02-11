@@ -7,11 +7,11 @@
   },
   "configurePresets": [
     {
-      "name": "ninja-multi-vcpkg",
-      "displayName": "Ninja Multi-Config Configure Settings",
-      "description": "Configure with vcpkg toolchain",
+      "name": "vcpkg",
+      "displayName": "Configure Vcpkg",
+      "description": "Configure vcpkg toolchain",
       "binaryDir": "${sourceDir}",
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": {
           "type": "FILEPATH",

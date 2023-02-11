@@ -33,8 +33,7 @@ runs:
       uses: lukka/run-cmake@v10
       id: runcmake
       with:
-        cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-        configurePreset: 'ninja-multi-vcpkg'
+        configurePreset: 'vcpkg'
         configurePresetAdditionalArgs: '[`-DVCPKG_TARGET_TRIPLET=${{ inputs.triplet }}`]'
     
     #- name: List $RUNNER_WORKSPACE after build
