@@ -30,15 +30,6 @@ jobs:
           triplet: arm64-windows
 
 
-  vcpkg_windows-x86:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-          fetch-depth: 0
-
-
   vcpkg_linux-x64:
     runs-on: ubuntu-latest
     steps:
@@ -53,10 +44,11 @@ jobs:
         env:
           CFLAGS: "-Xlinker -Bsymbolic"
           LDFLAGS: "-Xlinker -Bsymbolic"
-           
-      - name: List $RUNNER_WORKSPACE after build
-        run: find /usr/bin/
-        shell: bash
+
+      - name: Install GNU AArch64 tools
+        run: |
+          sudo apt update
+          sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y     
 
       - uses: ./.github/workflows/vcpkg
         with:
@@ -85,7 +77,7 @@ jobs:
 
   pack-nuget:
     name: pack-nuget
-    needs: [ vcpkg_windows-x64, vcpkg_windows-x86, vcpkg_linux-x64, vcpkg_osx-x64 ]
+    needs: [ vcpkg_windows-x64, vcpkg_linux-x64, vcpkg_osx-x64 ]
     runs-on: windows-latest
     
     steps:
