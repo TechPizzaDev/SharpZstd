@@ -8,6 +8,7 @@ env:
   VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
 
 jobs:
+
   vcpkg_windows-x64:
     runs-on: windows-latest
     steps:
@@ -19,14 +20,24 @@ jobs:
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-windows
-      
-      - uses: ./.github/workflows/vcpkg
-        with:
-          triplet: x86-windows
 
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: arm64-windows
+
+
+  vcpkg_windows-x86:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - uses: ./.github/workflows/vcpkg
+        with:
+          triplet: x86-windows
+
 
   vcpkg_linux-x64:
     runs-on: ubuntu-latest
@@ -35,6 +46,7 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-linux
@@ -48,8 +60,8 @@ jobs:
         env:
           CFLAGS: "-Xlinker -Bsymbolic"
           LDFLAGS: "-Xlinker -Bsymbolic"
-          VCPKG_DEFAULT_TRIPLET: arm64-linux
       
+
   vcpkg_osx-x64:
     runs-on: macos-latest
     steps:
@@ -57,6 +69,7 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-osx
@@ -65,9 +78,10 @@ jobs:
         with:
           triplet: arm64-osx
         
+
   pack-nuget:
     name: pack-nuget
-    needs: [ vcpkg_windows-x64, vcpkg_linux-x64, vcpkg_osx-x64 ]
+    needs: [ vcpkg_windows-x64, vcpkg_windows-x86, vcpkg_linux-x64, vcpkg_osx-x64 ]
     runs-on: windows-latest
     
     steps:
