@@ -140,17 +140,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: vcpkg_installed
-          
-      - name: Fixup artifact names
-        shell: bash
-        working-directory: vcpkg_installed
-        run: |
-          mv ./x64-linux/lib/libzstd.so.1.5.2 ./x64-linux/lib/zstd.so
-          mv ./arm64-linux/lib/libzstd.so.1.5.2 ./arm64-linux/lib/zstd.so
 
-          mv ./x64-osx/lib/libzstd.1.5.2.dylib ./x64-osx/lib/zstd.dylib
-          mv ./arm64-osx/lib/libzstd.1.5.2.dylib ./arm64-osx/lib/zstd.dylib
-          
       - name: Create sources
         run: | 
           ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-windows/include "@scripts/GenerateZstd.rsp"
