@@ -20,6 +20,10 @@ jobs:
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-windows
+          
+      - uses: ./.github/workflows/vcpkg
+        with:
+          triplet: x86-windows
 
       - uses: ./.github/workflows/vcpkg
         with:
@@ -33,10 +37,6 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-
-      - uses: ./.github/workflows/vcpkg
-        with:
-          triplet: x86-windows
 
 
   vcpkg_linux-x64:
@@ -54,6 +54,10 @@ jobs:
           CFLAGS: "-Xlinker -Bsymbolic"
           LDFLAGS: "-Xlinker -Bsymbolic"
            
+      - name: List $RUNNER_WORKSPACE after build
+        run: find /usr/bin/
+        shell: bash
+
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: arm64-linux
