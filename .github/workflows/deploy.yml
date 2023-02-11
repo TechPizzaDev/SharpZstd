@@ -16,14 +16,31 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-windows
           
+
+  vcpkg_windows-x86:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x86-windows
+
+
+  vcpkg_windows-arm64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
 
       - uses: ./.github/workflows/vcpkg
         with:
@@ -44,6 +61,15 @@ jobs:
         env:
           CFLAGS: "-Xlinker -Bsymbolic"
           LDFLAGS: "-Xlinker -Bsymbolic"
+
+
+  vcpkg_linux-arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
 
       - name: Install GNU AArch64 tools
         run: |
@@ -70,6 +96,15 @@ jobs:
         with:
           triplet: x64-osx
       
+      
+  vcpkg_osx-arm64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: arm64-osx
@@ -77,7 +112,15 @@ jobs:
 
   pack-nuget:
     name: pack-nuget
-    needs: [ vcpkg_windows-x64, vcpkg_linux-x64, vcpkg_osx-x64 ]
+    needs:
+      - vcpkg_windows-x64
+      - vcpkg_windows-x86
+      - vcpkg_windows-arm64
+      - vcpkg_linux-x64
+      - vcpkg_linux-arm64
+      - vcpkg_osx-x64
+      - vcpkg_osx-arm64
+
     runs-on: windows-latest
     
     steps:
@@ -101,6 +144,7 @@ jobs:
         run: |
           7z x vcpkg_artifacts/x64-windows -ovcpkg_installed/x64-windows
           7z x vcpkg_artifacts/x86-windows -ovcpkg_installed/x86-windows
+          7z x vcpkg_artifacts/arm64-windows -ovcpkg_installed/arm64-windows
           7z x vcpkg_artifacts/x64-linux -ovcpkg_installed/x64-linux
           7z x vcpkg_artifacts/arm64-linux -ovcpkg_installed/arm64-linux
           7z x vcpkg_artifacts/x64-osx -ovcpkg_installed/x64-osx
