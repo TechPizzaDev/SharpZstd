@@ -17,9 +17,6 @@ outputs: {}
 
 runs: 
   using: "composite"
-  
-  env:
-    VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
       
   steps:
     - name: Setup env
