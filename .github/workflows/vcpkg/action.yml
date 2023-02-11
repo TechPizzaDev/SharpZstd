@@ -28,6 +28,8 @@ runs:
       with:
         vcpkgJsonGlob: 'vcpkg.json'
         appendedCacheKey: ${{ inputs.triplet }}
+      env:
+        VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
     - name: Run CMake (consuming CMakePreset.json and vcpkg.json by vcpkg)
       uses: lukka/run-cmake@v10
