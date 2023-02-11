@@ -12,10 +12,11 @@ jobs:
   vcpkg_windows-x64:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
+
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-windows
@@ -24,7 +25,7 @@ jobs:
   vcpkg_windows-x86:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
@@ -37,7 +38,7 @@ jobs:
   vcpkg_windows-arm64:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
@@ -50,7 +51,7 @@ jobs:
   vcpkg_linux-x64:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
@@ -66,7 +67,7 @@ jobs:
   vcpkg_linux-arm64:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
@@ -87,7 +88,7 @@ jobs:
   vcpkg_osx-x64:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
@@ -100,7 +101,7 @@ jobs:
   vcpkg_osx-arm64:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
@@ -125,7 +126,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -136,19 +137,19 @@ jobs:
         run: dotnet tool install --global ClangSharpPInvokeGenerator --version 13.0.0-beta1
           
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: vcpkg_artifacts
           
       - name: Unzip artifacts
         run: |
-          7z x vcpkg_artifacts/x64-windows -ovcpkg_installed/x64-windows
-          7z x vcpkg_artifacts/x86-windows -ovcpkg_installed/x86-windows
-          7z x vcpkg_artifacts/arm64-windows -ovcpkg_installed/arm64-windows
-          7z x vcpkg_artifacts/x64-linux -ovcpkg_installed/x64-linux
-          7z x vcpkg_artifacts/arm64-linux -ovcpkg_installed/arm64-linux
-          7z x vcpkg_artifacts/x64-osx -ovcpkg_installed/x64-osx
-          7z x vcpkg_artifacts/arm64-osx -ovcpkg_installed/arm64-osx
+          7z x vcpkg_artifacts/x64-windows.zip -ovcpkg_installed/x64-windows
+          7z x vcpkg_artifacts/x86-windows.zip -ovcpkg_installed/x86-windows
+          7z x vcpkg_artifacts/arm64-windows.zip -ovcpkg_installed/arm64-windows
+          7z x vcpkg_artifacts/x64-linux.zip -ovcpkg_installed/x64-linux
+          7z x vcpkg_artifacts/arm64-linux.zip -ovcpkg_installed/arm64-linux
+          7z x vcpkg_artifacts/x64-osx.zip -ovcpkg_installed/x64-osx
+          7z x vcpkg_artifacts/arm64-osx.zip -ovcpkg_installed/arm64-osx
       
       - name: Fixup artifact names
         shell: bash
@@ -181,9 +182,9 @@ jobs:
         run: 7z a pkg.Release.zip ./artifacts/pkg/Release/* -r
 
       - name: Upload Nuget artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: pkg.Release
+          name: pkg.Release.zip
           path: pkg.Release.zip
         
       - name: Nuget Push 
