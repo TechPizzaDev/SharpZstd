@@ -19,9 +19,6 @@ runs:
   using: "composite"
       
   steps:
-    - name: Setup env
-        run: echo "VCPKG_DEFAULT_TRIPLET='${{ inputs.triplet }}'" >> $GITHUB_ENV
-
     - name: Setup cmake
       uses: lukka/get-cmake@latest
         
@@ -43,6 +40,8 @@ runs:
         configurePreset: 'ninja-multi-vcpkg'
         buildPreset: 'ninja-multi-vcpkg'
         buildPresetAdditionalArgs: '[`--config Release`]'
+      env:
+        VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
     #- name: List $RUNNER_WORKSPACE after build
     #  run: find $RUNNER_WORKSPACE
