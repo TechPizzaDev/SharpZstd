@@ -29,9 +29,6 @@ runs:
         vcpkgJsonGlob: 'vcpkg.json'
         appendedCacheKey: ${{ inputs.triplet }}
     
-    - name: Prints output of run-vcpkg's action.
-        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
-    
     - name: Run CMake (consuming CMakePreset.json and vcpkg.json by vcpkg)
       uses: lukka/run-cmake@v10
       id: runcmake
