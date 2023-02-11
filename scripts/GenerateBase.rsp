@@ -6,6 +6,7 @@ multi-file
 unix-types
 generate-helper-types
 log-potential-typedef-remappings
+log-visited-files   
 
 --define-macro
 ZSTD_STATIC_LINKING_ONLY

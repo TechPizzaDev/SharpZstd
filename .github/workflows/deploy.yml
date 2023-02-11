@@ -122,7 +122,7 @@ jobs:
       - vcpkg_osx-x64
       - vcpkg_osx-arm64
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout
@@ -133,19 +133,11 @@ jobs:
         with:
           dotnet-version: '6.0.x'
       
-      - name: Install .NET tools
-        run: dotnet tool install --global ClangSharpPInvokeGenerator --version 13.0.0-beta1
-          
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
           path: vcpkg_installed
 
-      - name: Create sources
-        run: | 
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-windows/include "@scripts/GenerateZstd.rsp"
-          ClangSharpPInvokeGenerator --file-directory vcpkg_installed/x64-windows/include "@scripts/GenerateZdict.rsp"
-      
       - name: Restore
         run: dotnet restore
       
