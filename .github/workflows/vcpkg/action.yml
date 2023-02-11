@@ -35,7 +35,7 @@ runs:
       with:
         cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
         configurePreset: 'ninja-multi-vcpkg'
-        configurePresetAdditionalArgs: '[`--config Release`,`-DVCPKG_TARGET_TRIPLET=${{ inputs.triplet }}`]'
+        configurePresetAdditionalArgs: '[`-DVCPKG_TARGET_TRIPLET=${{ inputs.triplet }}`]'
       env:
         VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
