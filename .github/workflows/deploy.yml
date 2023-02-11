@@ -139,21 +139,11 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          path: vcpkg_artifacts
+          path: vcpkg_installed
           
-      - name: Unzip artifacts
-        run: |
-          7z x vcpkg_artifacts/x64-windows.zip -ovcpkg_installed/x64-windows
-          7z x vcpkg_artifacts/x86-windows.zip -ovcpkg_installed/x86-windows
-          7z x vcpkg_artifacts/arm64-windows.zip -ovcpkg_installed/arm64-windows
-          7z x vcpkg_artifacts/x64-linux.zip -ovcpkg_installed/x64-linux
-          7z x vcpkg_artifacts/arm64-linux.zip -ovcpkg_installed/arm64-linux
-          7z x vcpkg_artifacts/x64-osx.zip -ovcpkg_installed/x64-osx
-          7z x vcpkg_artifacts/arm64-osx.zip -ovcpkg_installed/arm64-osx
-      
       - name: Fixup artifact names
         shell: bash
-        working-directory: './vcpkg_installed'
+        working-directory: vcpkg_installed
         run: |
           mv ./x64-linux/lib/libzstd.so.1.5.2 ./x64-linux/lib/zstd.so
           mv ./arm64-linux/lib/libzstd.so.1.5.2 ./arm64-linux/lib/zstd.so
@@ -178,14 +168,11 @@ jobs:
       - name: Pack
         run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
-      - name: Zip Nuget artifact
-        run: 7z a pkg.Release.zip ./artifacts/pkg/Release/* -r
-
       - name: Upload Nuget artifact
         uses: actions/upload-artifact@v3
         with:
-          name: pkg.Release.zip
-          path: pkg.Release.zip
+          name: pkg.Release
+          path: artifacts/pkg/Release/*
         
       - name: Nuget Push 
         if: startsWith(github.ref, 'refs/tags/')

@@ -44,12 +44,8 @@ runs:
     #  run: find $RUNNER_WORKSPACE
     #  shell: bash
     
-    - name: Zip artifacts
-      run: 7z a ${{ inputs.triplet }}.zip ./vcpkg_installed/${{ inputs.triplet }}/* -r
-      shell: bash
-      
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ inputs.triplet }}.zip
-        path: ${{ inputs.triplet }}.zip
+        name: ${{ inputs.triplet }}
+        path: vcpkg_installed/${{ inputs.triplet }}/*
