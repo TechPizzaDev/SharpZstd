@@ -20,7 +20,7 @@ runs:
       
   steps:
     - name: Setup env
-        run: echo "VCPKG_DEFAULT_TRIPLET=${{ inputs.triplet }}" >> $GITHUB_ENV
+        run: echo "VCPKG_DEFAULT_TRIPLET='${{ inputs.triplet }}'" >> $GITHUB_ENV
 
     - name: Setup cmake
       uses: lukka/get-cmake@latest
