@@ -20,9 +20,11 @@ runs:
   
   env:
     VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
-    VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
       
   steps:
+    - name: Setup env
+        run: echo "VCPKG_DEFAULT_TRIPLET=${{ inputs.triplet }}" >> $GITHUB_ENV
+
     - name: Setup cmake
       uses: lukka/get-cmake@latest
         

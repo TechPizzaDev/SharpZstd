@@ -5,6 +5,7 @@ on:
 
 env:
   VCPKG_INSTALLED_DIR: vcpkg_installed
+  VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
 
 jobs:
   vcpkg_windows-x64:
