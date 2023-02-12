@@ -8,364 +8,364 @@ namespace SharpZstd.Interop
 {
     public static unsafe partial class Zstd
     {
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_versionNumber();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const char *")]
         public static extern sbyte* ZSTD_versionString();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compress(void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompress(void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint compressedSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned long long")]
         public static extern ulong ZSTD_getFrameContentSize([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned long long")]
         public static extern ulong ZSTD_getDecompressedSize([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_findFrameCompressedSize([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressBound([NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_isError([NativeTypeName("size_t")] nuint code);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const char *")]
         public static extern sbyte* ZSTD_getErrorName([NativeTypeName("size_t")] nuint code);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int ZSTD_minCLevel();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int ZSTD_maxCLevel();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int ZSTD_defaultCLevel();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CCtx* ZSTD_createCCtx();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_freeCCtx(ZSTD_CCtx* cctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressCCtx(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_DCtx* ZSTD_createDCtx();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_freeDCtx(ZSTD_DCtx* dctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressDCtx(ZSTD_DCtx* dctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_bounds ZSTD_cParam_getBounds(ZSTD_cParameter cParam);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_setParameter(ZSTD_CCtx* cctx, ZSTD_cParameter param1, int value);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_setPledgedSrcSize(ZSTD_CCtx* cctx, [NativeTypeName("unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_reset(ZSTD_CCtx* cctx, ZSTD_ResetDirective reset);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compress2(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_bounds ZSTD_dParam_getBounds(ZSTD_dParameter dParam);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_setParameter(ZSTD_DCtx* dctx, ZSTD_dParameter param1, int value);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_reset(ZSTD_DCtx* dctx, ZSTD_ResetDirective reset);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("ZSTD_CStream *")]
         public static extern ZSTD_CCtx* ZSTD_createCStream();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_freeCStream([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressStream2(ZSTD_CCtx* cctx, ZSTD_outBuffer* output, ZSTD_inBuffer* input, ZSTD_EndDirective endOp);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CStreamInSize();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CStreamOutSize();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_initCStream([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressStream([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, ZSTD_outBuffer* output, ZSTD_inBuffer* input);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_flushStream([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, ZSTD_outBuffer* output);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_endStream([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, ZSTD_outBuffer* output);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("ZSTD_DStream *")]
         public static extern ZSTD_DCtx* ZSTD_createDStream();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_freeDStream([NativeTypeName("ZSTD_DStream *")] ZSTD_DCtx* zds);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_initDStream([NativeTypeName("ZSTD_DStream *")] ZSTD_DCtx* zds);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressStream([NativeTypeName("ZSTD_DStream *")] ZSTD_DCtx* zds, ZSTD_outBuffer* output, ZSTD_inBuffer* input);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DStreamInSize();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DStreamOutSize();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compress_usingDict(ZSTD_CCtx* ctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompress_usingDict(ZSTD_DCtx* dctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CDict* ZSTD_createCDict([NativeTypeName("const void *")] void* dictBuffer, [NativeTypeName("size_t")] nuint dictSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_freeCDict(ZSTD_CDict* CDict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compress_usingCDict(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_DDict* ZSTD_createDDict([NativeTypeName("const void *")] void* dictBuffer, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_freeDDict(ZSTD_DDict* ddict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompress_usingDDict(ZSTD_DCtx* dctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("const ZSTD_DDict *")] ZSTD_DDict* ddict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_getDictID_fromDict([NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_getDictID_fromCDict([NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_getDictID_fromDDict([NativeTypeName("const ZSTD_DDict *")] ZSTD_DDict* ddict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_getDictID_fromFrame([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_loadDictionary(ZSTD_CCtx* cctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_refCDict(ZSTD_CCtx* cctx, [NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_refPrefix(ZSTD_CCtx* cctx, [NativeTypeName("const void *")] void* prefix, [NativeTypeName("size_t")] nuint prefixSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_loadDictionary(ZSTD_DCtx* dctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_refDDict(ZSTD_DCtx* dctx, [NativeTypeName("const ZSTD_DDict *")] ZSTD_DDict* ddict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_refPrefix(ZSTD_DCtx* dctx, [NativeTypeName("const void *")] void* prefix, [NativeTypeName("size_t")] nuint prefixSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_sizeof_CCtx([NativeTypeName("const ZSTD_CCtx *")] ZSTD_CCtx* cctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_sizeof_DCtx([NativeTypeName("const ZSTD_DCtx *")] ZSTD_DCtx* dctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_sizeof_CStream([NativeTypeName("const ZSTD_CStream *")] ZSTD_CCtx* zcs);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_sizeof_DStream([NativeTypeName("const ZSTD_DStream *")] ZSTD_DCtx* zds);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_sizeof_CDict([NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_sizeof_DDict([NativeTypeName("const ZSTD_DDict *")] ZSTD_DDict* ddict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned long long")]
         public static extern ulong ZSTD_findDecompressedSize([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned long long")]
         public static extern ulong ZSTD_decompressBound([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_frameHeaderSize([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_generateSequences(ZSTD_CCtx* zc, ZSTD_Sequence* outSeqs, [NativeTypeName("size_t")] nuint outSeqsSize, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_mergeBlockDelimiters(ZSTD_Sequence* sequences, [NativeTypeName("size_t")] nuint seqsSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressSequences([NativeTypeName("ZSTD_CCtx *const")] ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstSize, [NativeTypeName("const ZSTD_Sequence *")] ZSTD_Sequence* inSeqs, [NativeTypeName("size_t")] nuint inSeqsSize, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_writeSkippableFrame(void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("unsigned int")] uint magicVariant);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_readSkippableFrame(void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("unsigned int *")] uint* magicVariant, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_isSkippableFrame([NativeTypeName("const void *")] void* buffer, [NativeTypeName("size_t")] nuint size);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCCtxSize(int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCCtxSize_usingCParams(ZSTD_compressionParameters cParams);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCCtxSize_usingCCtxParams([NativeTypeName("const ZSTD_CCtx_params *")] ZSTD_CCtx_params* @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateDCtxSize();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCStreamSize(int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCStreamSize_usingCParams(ZSTD_compressionParameters cParams);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCStreamSize_usingCCtxParams([NativeTypeName("const ZSTD_CCtx_params *")] ZSTD_CCtx_params* @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateDStreamSize([NativeTypeName("size_t")] nuint windowSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateDStreamSize_fromFrame([NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCDictSize([NativeTypeName("size_t")] nuint dictSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateCDictSize_advanced([NativeTypeName("size_t")] nuint dictSize, ZSTD_compressionParameters cParams, ZSTD_dictLoadMethod_e dictLoadMethod);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_estimateDDictSize([NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CCtx* ZSTD_initStaticCCtx(void* workspace, [NativeTypeName("size_t")] nuint workspaceSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("ZSTD_CStream *")]
         public static extern ZSTD_CCtx* ZSTD_initStaticCStream(void* workspace, [NativeTypeName("size_t")] nuint workspaceSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_DCtx* ZSTD_initStaticDCtx(void* workspace, [NativeTypeName("size_t")] nuint workspaceSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("ZSTD_DStream *")]
         public static extern ZSTD_DCtx* ZSTD_initStaticDStream(void* workspace, [NativeTypeName("size_t")] nuint workspaceSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const ZSTD_CDict *")]
         public static extern ZSTD_CDict* ZSTD_initStaticCDict(void* workspace, [NativeTypeName("size_t")] nuint workspaceSize, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod, ZSTD_dictContentType_e dictContentType, ZSTD_compressionParameters cParams);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const ZSTD_DDict *")]
         public static extern ZSTD_DDict* ZSTD_initStaticDDict(void* workspace, [NativeTypeName("size_t")] nuint workspaceSize, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod, ZSTD_dictContentType_e dictContentType);
 
@@ -377,286 +377,286 @@ namespace SharpZstd.Interop
             opaque = null,
         };
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CCtx* ZSTD_createCCtx_advanced(ZSTD_customMem customMem);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("ZSTD_CStream *")]
         public static extern ZSTD_CCtx* ZSTD_createCStream_advanced(ZSTD_customMem customMem);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_DCtx* ZSTD_createDCtx_advanced(ZSTD_customMem customMem);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("ZSTD_DStream *")]
         public static extern ZSTD_DCtx* ZSTD_createDStream_advanced(ZSTD_customMem customMem);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CDict* ZSTD_createCDict_advanced([NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod, ZSTD_dictContentType_e dictContentType, ZSTD_compressionParameters cParams, ZSTD_customMem customMem);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_threadPool* ZSTD_createThreadPool([NativeTypeName("size_t")] nuint numThreads);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void ZSTD_freeThreadPool(ZSTD_threadPool* pool);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_refThreadPool(ZSTD_CCtx* cctx, ZSTD_threadPool* pool);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CDict* ZSTD_createCDict_advanced2([NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod, ZSTD_dictContentType_e dictContentType, [NativeTypeName("const ZSTD_CCtx_params *")] ZSTD_CCtx_params* cctxParams, ZSTD_customMem customMem);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_DDict* ZSTD_createDDict_advanced([NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod, ZSTD_dictContentType_e dictContentType, ZSTD_customMem customMem);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CDict* ZSTD_createCDict_byReference([NativeTypeName("const void *")] void* dictBuffer, [NativeTypeName("size_t")] nuint dictSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_compressionParameters ZSTD_getCParams(int compressionLevel, [NativeTypeName("unsigned long long")] ulong estimatedSrcSize, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_parameters ZSTD_getParams(int compressionLevel, [NativeTypeName("unsigned long long")] ulong estimatedSrcSize, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_checkCParams(ZSTD_compressionParameters @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_compressionParameters ZSTD_adjustCParams(ZSTD_compressionParameters cPar, [NativeTypeName("unsigned long long")] ulong srcSize, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_compress2")]
         public static extern nuint ZSTD_compress_advanced(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_parameters @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_compress2 with ZSTD_CCtx_loadDictionary")]
         public static extern nuint ZSTD_compress_usingCDict_advanced(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict, ZSTD_frameParameters fParams);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_loadDictionary_byReference(ZSTD_CCtx* cctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_loadDictionary_advanced(ZSTD_CCtx* cctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod, ZSTD_dictContentType_e dictContentType);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_refPrefix_advanced(ZSTD_CCtx* cctx, [NativeTypeName("const void *")] void* prefix, [NativeTypeName("size_t")] nuint prefixSize, ZSTD_dictContentType_e dictContentType);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_getParameter([NativeTypeName("const ZSTD_CCtx *")] ZSTD_CCtx* cctx, ZSTD_cParameter param1, int* value);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_CCtx_params* ZSTD_createCCtxParams();
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_freeCCtxParams(ZSTD_CCtx_params* @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtxParams_reset(ZSTD_CCtx_params* @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtxParams_init(ZSTD_CCtx_params* cctxParams, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtxParams_init_advanced(ZSTD_CCtx_params* cctxParams, ZSTD_parameters @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtxParams_setParameter(ZSTD_CCtx_params* @params, ZSTD_cParameter param1, int value);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtxParams_getParameter([NativeTypeName("const ZSTD_CCtx_params *")] ZSTD_CCtx_params* @params, ZSTD_cParameter param1, int* value);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_CCtx_setParametersUsingCCtxParams(ZSTD_CCtx* cctx, [NativeTypeName("const ZSTD_CCtx_params *")] ZSTD_CCtx_params* @params);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressStream2_simpleArgs(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("size_t *")] nuint* dstPos, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("size_t *")] nuint* srcPos, ZSTD_EndDirective endOp);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_isFrame([NativeTypeName("const void *")] void* buffer, [NativeTypeName("size_t")] nuint size);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_DDict* ZSTD_createDDict_byReference([NativeTypeName("const void *")] void* dictBuffer, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_loadDictionary_byReference(ZSTD_DCtx* dctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_loadDictionary_advanced(ZSTD_DCtx* dctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_dictLoadMethod_e dictLoadMethod, ZSTD_dictContentType_e dictContentType);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_refPrefix_advanced(ZSTD_DCtx* dctx, [NativeTypeName("const void *")] void* prefix, [NativeTypeName("size_t")] nuint prefixSize, ZSTD_dictContentType_e dictContentType);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_setMaxWindowSize(ZSTD_DCtx* dctx, [NativeTypeName("size_t")] nuint maxWindowSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_DCtx_getParameter(ZSTD_DCtx* dctx, ZSTD_dParameter param1, int* value);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_DCtx_setParameter() instead")]
         public static extern nuint ZSTD_DCtx_setFormat(ZSTD_DCtx* dctx, ZSTD_format_e format);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressStream_simpleArgs(ZSTD_DCtx* dctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("size_t *")] nuint* dstPos, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, [NativeTypeName("size_t *")] nuint* srcPos);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_CCtx_reset, see zstd.h for detailed instructions")]
         public static extern nuint ZSTD_initCStream_srcSize([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, int compressionLevel, [NativeTypeName("unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_CCtx_reset, see zstd.h for detailed instructions")]
         public static extern nuint ZSTD_initCStream_usingDict([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_CCtx_reset, see zstd.h for detailed instructions")]
         public static extern nuint ZSTD_initCStream_advanced([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_parameters @params, [NativeTypeName("unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_CCtx_reset and ZSTD_CCtx_refCDict, see zstd.h for detailed instructions")]
         public static extern nuint ZSTD_initCStream_usingCDict([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, [NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_CCtx_reset and ZSTD_CCtx_refCDict, see zstd.h for detailed instructions")]
         public static extern nuint ZSTD_initCStream_usingCDict_advanced([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, [NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict, ZSTD_frameParameters fParams, [NativeTypeName("unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use ZSTD_CCtx_reset, see zstd.h for detailed instructions")]
         public static extern nuint ZSTD_resetCStream([NativeTypeName("ZSTD_CStream *")] ZSTD_CCtx* zcs, [NativeTypeName("unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_frameProgression ZSTD_getFrameProgression([NativeTypeName("const ZSTD_CCtx *")] ZSTD_CCtx* cctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_toFlushNow(ZSTD_CCtx* cctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_initDStream_usingDict([NativeTypeName("ZSTD_DStream *")] ZSTD_DCtx* zds, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_initDStream_usingDDict([NativeTypeName("ZSTD_DStream *")] ZSTD_DCtx* zds, [NativeTypeName("const ZSTD_DDict *")] ZSTD_DDict* ddict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_resetDStream([NativeTypeName("ZSTD_DStream *")] ZSTD_DCtx* zds);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressBegin(ZSTD_CCtx* cctx, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressBegin_usingDict(ZSTD_CCtx* cctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, int compressionLevel);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressBegin_usingCDict(ZSTD_CCtx* cctx, [NativeTypeName("const ZSTD_CDict *")] ZSTD_CDict* cdict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_copyCCtx(ZSTD_CCtx* cctx, [NativeTypeName("const ZSTD_CCtx *")] ZSTD_CCtx* preparedCCtx, [NativeTypeName("unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressContinue(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressEnd(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use advanced API to access custom parameters")]
         public static extern nuint ZSTD_compressBegin_advanced(ZSTD_CCtx* cctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize, ZSTD_parameters @params, [NativeTypeName("unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use advanced API to access custom parameters")]
         public static extern nuint ZSTD_compressBegin_usingCDict_advanced([NativeTypeName("ZSTD_CCtx *const")] ZSTD_CCtx* cctx, [NativeTypeName("const ZSTD_CDict *const")] ZSTD_CDict* cdict, [NativeTypeName("const ZSTD_frameParameters")] ZSTD_frameParameters fParams, [NativeTypeName("const unsigned long long")] ulong pledgedSrcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_getFrameHeader(ZSTD_frameHeader* zfhPtr, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_getFrameHeader_advanced(ZSTD_frameHeader* zfhPtr, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize, ZSTD_format_e format);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decodingBufferSize_min([NativeTypeName("unsigned long long")] ulong windowSize, [NativeTypeName("unsigned long long")] ulong frameContentSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressBegin(ZSTD_DCtx* dctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressBegin_usingDict(ZSTD_DCtx* dctx, [NativeTypeName("const void *")] void* dict, [NativeTypeName("size_t")] nuint dictSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressBegin_usingDDict(ZSTD_DCtx* dctx, [NativeTypeName("const ZSTD_DDict *")] ZSTD_DDict* ddict);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_nextSrcSizeToDecompress(ZSTD_DCtx* dctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressContinue(ZSTD_DCtx* dctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void ZSTD_copyDCtx(ZSTD_DCtx* dctx, [NativeTypeName("const ZSTD_DCtx *")] ZSTD_DCtx* preparedDCtx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_nextInputType_e ZSTD_nextInputType(ZSTD_DCtx* dctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_getBlockSize([NativeTypeName("const ZSTD_CCtx *")] ZSTD_CCtx* cctx);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressBlock(ZSTD_CCtx* cctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_decompressBlock(ZSTD_DCtx* dctx, void* dst, [NativeTypeName("size_t")] nuint dstCapacity, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_insertBlock(ZSTD_DCtx* dctx, [NativeTypeName("const void *")] void* blockStart, [NativeTypeName("size_t")] nuint blockSize);
 
@@ -864,10 +864,10 @@ namespace SharpZstd.Interop
         [NativeTypeName("#define ZSTD_d_refMultipleDDicts ZSTD_d_experimentalParam4")]
         public const ZSTD_dParameter ZSTD_d_refMultipleDDicts = ZSTD_d_experimentalParam4;
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_ErrorCode ZSTD_getErrorCode([NativeTypeName("size_t")] nuint functionResult);
 
-        [DllImport("zstd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const char *")]
         public static extern sbyte* ZSTD_getErrorString(ZSTD_ErrorCode code);
     }

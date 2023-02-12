@@ -2,13 +2,15 @@
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFramework>netstandard2.0</TargetFramework>
-	  <LangVersion>9.0</LangVersion>
-    <IncludeSymbols>false</IncludeSymbols>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.0;net5.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+    <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup>
+    <ZstdPackagedName>SharpZstd.Native</ZstdPackagedName>
     <ZstdOsxVersion>$(ZstdVersion)</ZstdOsxVersion>
     <ZstdLinuxVersion>$(ZstdVersion)</ZstdLinuxVersion>
   </PropertyGroup>
@@ -18,49 +20,61 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="PolySharp" Version="1.12.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/x64-windows/bin/zstd.dll">
-      <PackagePath>runtimes/win-x64/native</PackagePath>
+      <PackagePath>runtimes/win-x64/native/$(ZstdPackagedName).win-x64.dll</PackagePath>
     </None>
     <None Pack="true" Include="../../../vcpkg_installed/x64-windows/bin/zstd.pdb">
-      <PackagePath>runtimes/win-x64/native</PackagePath>
+      <PackagePath>runtimes/win-x64/native/$(ZstdPackagedName).win-x64.pdb</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/x86-windows/bin/zstd.dll">
-      <PackagePath>runtimes/win-x86/native</PackagePath>
+      <PackagePath>runtimes/win-x86/native/$(ZstdPackagedName).win-x86.dll</PackagePath>
     </None>
     <None Pack="true" Include="../../../vcpkg_installed/x86-windows/bin/zstd.pdb">
-      <PackagePath>runtimes/win-x86/native</PackagePath>
+      <PackagePath>runtimes/win-x86/native/$(ZstdPackagedName).win-x86.pdb</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/arm64-windows/bin/zstd.dll">
-      <PackagePath>runtimes/win-arm64/native</PackagePath>
+      <PackagePath>runtimes/win-arm64/native/$(ZstdPackagedName).win-arm64.dll</PackagePath>
     </None>
     <None Pack="true" Include="../../../vcpkg_installed/arm64-windows/bin/zstd.pdb">
-      <PackagePath>runtimes/win-arm64/native</PackagePath>
+      <PackagePath>runtimes/win-arm64/native/$(ZstdPackagedName).win-arm64.pdb</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/x64-linux/lib/libzstd.so.$(ZstdLinuxVersion)">
-      <PackagePath>runtimes/linux-x64/native/zstd.so</PackagePath>
+      <PackagePath>runtimes/linux-x64/native/$(ZstdPackagedName).linux-x64.so</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/arm64-linux/lib/libzstd.so.$(ZstdLinuxVersion)">
-      <PackagePath>runtimes/linux-arm64/native/zstd.so</PackagePath>
+      <PackagePath>runtimes/linux-arm64/native/$(ZstdPackagedName).linux-arm64.so</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/x64-osx/lib/libzstd.$(ZstdOsxVersion).dylib">
-      <PackagePath>runtimes/osx-x64/native/zstd.dylib</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/$(ZstdPackagedName).osx-x64.dylib</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Pack="true" Include="../../../vcpkg_installed/arm64-osx/lib/libzstd.$(ZstdOsxVersion).dylib">
-      <PackagePath>runtimes/osx-arm64/native/zstd.dylib</PackagePath>
+      <PackagePath>runtimes/osx-arm64/native/$(ZstdPackagedName).osx-arm64.dylib</PackagePath>
     </None>
   </ItemGroup>
 
 </Project>
-    
