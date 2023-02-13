@@ -20,10 +20,10 @@ CINDEX_VERSION_STRINGIZE_
 zstd
 
 --output
-./sources/SharpZstd/Interop
+./sources/SharpZstd.Interop/Generated
 
 --test-output
-./tests/SharpZstd.UnitTests/InteropTests
+./tests/SharpZstd.Interop.Tests/PInvoke/Generated
 
 --namespace
 SharpZstd.Interop

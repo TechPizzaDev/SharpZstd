@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\sources\SharpZstd\Interop\SharpZstd.Interop.csproj" />
+    <ProjectReference Include="..\..\sources\SharpZstd.Interop\SharpZstd.Interop.csproj" />
   </ItemGroup>
 
 </Project>
