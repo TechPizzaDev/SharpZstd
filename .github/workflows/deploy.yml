@@ -138,6 +138,10 @@ jobs:
         with:
           path: vcpkg_installed
 
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+    
       - name: Restore
         run: dotnet restore
       
