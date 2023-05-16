@@ -143,11 +143,12 @@ jobs:
         shell: bash
     
       - name: Rename artifacts
-        with:
+        env:
           package-name: SharpZstd.Native
           lib-version: "1.5.2"
           renamed-dst: vcpkg_renames_binaries
-        run: mv vcpkg_installed/x86-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-x86.dll |
+        run: mkdir ${{ renamed-dst }}
+             mv vcpkg_installed/x86-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-x86.dll |
              mv vcpkg_installed/x86-windows/bin/zstd.pdb ${{ renamed-dst }}/${{ package-name }}.win-x86.pdb |
      
              mv vcpkg_installed/x64-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-x64.dll |
