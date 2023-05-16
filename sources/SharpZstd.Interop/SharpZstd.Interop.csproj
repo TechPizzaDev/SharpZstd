@@ -18,52 +18,50 @@
 
   <ItemGroup>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).win-x64.dll" Visible="false">
-      <PackagePath>runtimes/win-x64/native/</PackagePath>
+      <PackagePath>runtimes/win-x64/native/$(ZstdPackagedName).win-x64.dll</PackagePath>
     </None>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).win-x64.pdb" Visible="false">
-      <PackagePath>runtimes/win-x64/native/</PackagePath>
+      <PackagePath>runtimes/win-x64/native/$(ZstdPackagedName).win-x64.pdb</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).win-x86.dll" Visible="false">
-      <PackagePath>runtimes/win-x86/native/</PackagePath>
+      <PackagePath>runtimes/win-x86/native/$(ZstdPackagedName).win-x86.dll</PackagePath>
     </None>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).win-x86.pdb" Visible="false">
-      <PackagePath>runtimes/win-x86/native/</PackagePath>
+      <PackagePath>runtimes/win-x86/native/$(ZstdPackagedName).win-x86.pdb</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).win-arm64.dll" Visible="false">
-      <PackagePath>runtimes/win-arm64/native/</PackagePath>
+      <PackagePath>runtimes/win-arm64/native/$(ZstdPackagedName).win-arm64.dll</PackagePath>
     </None>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).win-arm64.pdb" Visible="false">
-      <PackagePath>runtimes/win-arm64/native/</PackagePath>
+      <PackagePath>runtimes/win-arm64/native/$(ZstdPackagedName).win-arm64.pdb</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).linux-x64.so" Visible="false">
-      <PackagePath>runtimes/linux-x64/native/</PackagePath>
+      <PackagePath>runtimes/linux-x64/native/$(ZstdPackagedName).linux-x64.so</PackagePath>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).linux-arm64.so" Visible="false">
-      <PackagePath>runtimes/linux-arm64/native/</PackagePath>
+      <PackagePath>runtimes/linux-arm64/native/$(ZstdPackagedName).linux-arm64.so</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).osx-x64.dylib" Visible="false">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/$(ZstdPackagedName).osx-x64.dylib</PackagePath>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <None Pack="true" Include="$(ZstdBinRoot)/$(ZstdPackagedName).osx-arm64.dylib" Visible="false">
-      <PackagePath>runtimes/osx-arm64/native/</PackagePath>
+      <PackagePath>runtimes/osx-arm64/native/$(ZstdPackagedName).osx-arm64.dylib</PackagePath>
     </None>
   </ItemGroup>
 
