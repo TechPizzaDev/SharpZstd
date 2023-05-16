@@ -131,7 +131,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '7.0.x'
       
       - name: Download artifacts
         uses: actions/download-artifact@v3
@@ -142,6 +142,30 @@ jobs:
         run: find $RUNNER_WORKSPACE
         shell: bash
     
+      - name: Rename artifacts
+        with:
+          package-name: SharpZstd.Native
+          lib-version: "1.5.2"
+          renamed-dst: vcpkg_renames_binaries
+        run: mv vcpkg_installed/x86-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-x86.dll |
+             mv vcpkg_installed/x86-windows/bin/zstd.pdb ${{ renamed-dst }}/${{ package-name }}.win-x86.pdb |
+     
+             mv vcpkg_installed/x64-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-x64.dll |
+             mv vcpkg_installed/x64-windows/bin/zstd.pdb ${{ renamed-dst }}/${{ package-name }}.win-x64.pdb | 
+                 
+             mv vcpkg_installed/arm64-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-arm64.dll |
+             mv vcpkg_installed/arm64-windows/bin/zstd.pdb ${{ renamed-dst }}/${{ package-name }}.win-arm64.pdb | 
+   
+             mv vcpkg_installed/x64-linux/lib/libzstd.so.${{ lib-version }} ${{ renamed-dst }}/${{ package-name }}.linux-x64.dll |    
+             mv vcpkg_installed/arm64-linux/lib/libzstd.so.${{ lib-version }} ${{ renamed-dst }}/${{ package-name }}.linux-arm64.dll |
+             
+             mv vcpkg_installed/x64-osx/lib/libzstd.${{ lib-version }}.dylib ${{ renamed-dst }}/${{ package-name }}.osx-x64.dll |
+             mv vcpkg_installed/arm64-osx/lib/libzstd.${{ lib-version }}.dylib ${{ renamed-dst }}/${{ package-name }}.osx-arm64.dll
+        
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Restore
         run: dotnet restore
       
