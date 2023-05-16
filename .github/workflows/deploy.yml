@@ -191,7 +191,7 @@ jobs:
       - name: Pack
         env: 
           LANG: en_US.UTF-8
-        run: dotnet pack -c Release --no-restore --no-build --verbosity debug
+        run: dotnet pack -c Release --no-restore --no-build --verbosity detailed
         
       - name: Upload Nuget artifact
         uses: actions/upload-artifact@v3
