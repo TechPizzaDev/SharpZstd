@@ -144,24 +144,24 @@ jobs:
     
       - name: Rename artifacts
         env:
-          package-name: SharpZstd.Native
-          lib-version: "1.5.2"
-          renamed-dst: vcpkg_renames_binaries
-        run: mkdir ${{ renamed-dst }}
-             mv vcpkg_installed/x86-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-x86.dll |
-             mv vcpkg_installed/x86-windows/bin/zstd.pdb ${{ renamed-dst }}/${{ package-name }}.win-x86.pdb |
+          Package_Name: SharpZstd.Native
+          Lib_Version: "1.5.2"
+          Renamed_Dst: vcpkg_renames_binaries
+        run: mkdir $Renamed_Dst
+             mv vcpkg_installed/x86-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-x86.dll |
+             mv vcpkg_installed/x86-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-x86.pdb |
      
-             mv vcpkg_installed/x64-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-x64.dll |
-             mv vcpkg_installed/x64-windows/bin/zstd.pdb ${{ renamed-dst }}/${{ package-name }}.win-x64.pdb | 
+             mv vcpkg_installed/x64-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-x64.dll |
+             mv vcpkg_installed/x64-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-x64.pdb | 
                  
-             mv vcpkg_installed/arm64-windows/bin/zstd.dll ${{ renamed-dst }}/${{ package-name }}.win-arm64.dll |
-             mv vcpkg_installed/arm64-windows/bin/zstd.pdb ${{ renamed-dst }}/${{ package-name }}.win-arm64.pdb | 
+             mv vcpkg_installed/arm64-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-arm64.dll |
+             mv vcpkg_installed/arm64-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-arm64.pdb | 
    
-             mv vcpkg_installed/x64-linux/lib/libzstd.so.${{ lib-version }} ${{ renamed-dst }}/${{ package-name }}.linux-x64.dll |    
-             mv vcpkg_installed/arm64-linux/lib/libzstd.so.${{ lib-version }} ${{ renamed-dst }}/${{ package-name }}.linux-arm64.dll |
+             mv vcpkg_installed/x64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-x64.dll |    
+             mv vcpkg_installed/arm64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-arm64.dll |
              
-             mv vcpkg_installed/x64-osx/lib/libzstd.${{ lib-version }}.dylib ${{ renamed-dst }}/${{ package-name }}.osx-x64.dll |
-             mv vcpkg_installed/arm64-osx/lib/libzstd.${{ lib-version }}.dylib ${{ renamed-dst }}/${{ package-name }}.osx-arm64.dll
+             mv vcpkg_installed/x64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-x64.dll |
+             mv vcpkg_installed/arm64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-arm64.dll
         
       - name: List $RUNNER_WORKSPACE after build
         run: find $RUNNER_WORKSPACE
