@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <ZstdBinRoot>../../vcpkg_renames_binaries</ZstdBinRoot>
+    <ZstdBinRoot>../../vcpkg_renamed_binaries</ZstdBinRoot>
     <ZstdPackagedName>SharpZstd.Native</ZstdPackagedName>
   </PropertyGroup>
 

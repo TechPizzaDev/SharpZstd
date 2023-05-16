@@ -146,7 +146,7 @@ jobs:
         env:
           Package_Name: SharpZstd.Native
           Lib_Version: "1.5.2"
-          Renamed_Dst: vcpkg_renames_binaries
+          Renamed_Dst: vcpkg_renamed_binaries
         run: mkdir $Renamed_Dst
              mv vcpkg_installed/x86-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-x86.dll |
              mv vcpkg_installed/x86-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-x86.pdb |
@@ -170,12 +170,24 @@ jobs:
       - name: Restore
         run: dotnet restore
       
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Build
         run: dotnet build -c Release --no-restore 
         
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Test
         run: dotnet test -c Release --no-restore --no-build
        
+      - name: List $RUNNER_WORKSPACE after build
+        run: find $RUNNER_WORKSPACE
+        shell: bash
+
       - name: Pack
         run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
