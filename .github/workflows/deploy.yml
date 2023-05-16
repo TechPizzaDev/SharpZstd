@@ -138,9 +138,9 @@ jobs:
         with:
           path: vcpkg_installed
 
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: List $RUNNER_WORKSPACE after build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
     
       - name: Rename artifacts
         env:
@@ -163,35 +163,21 @@ jobs:
              mv vcpkg_installed/x64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-x64.dll |
              mv vcpkg_installed/arm64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-arm64.dll
         
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+      #- name: List $RUNNER_WORKSPACE after build
+      #  run: find $RUNNER_WORKSPACE
+      #  shell: bash
 
       - name: Restore
         run: dotnet restore
       
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-
       - name: Build
         run: dotnet build -c Release --no-restore 
         
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-
       - name: Test
         run: dotnet test -c Release --no-restore --no-build
        
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-
       - name: Pack
-        env: 
-          LANG: en_US.UTF-8
-        run: dotnet pack -c Release --no-restore --no-build --verbosity detailed
+        run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
       - name: Upload Nuget artifact
         uses: actions/upload-artifact@v3
