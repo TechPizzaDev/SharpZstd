@@ -157,11 +157,11 @@ jobs:
              mv vcpkg_installed/arm64-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-arm64.dll |
              mv vcpkg_installed/arm64-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-arm64.pdb | 
    
-             mv vcpkg_installed/x64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-x64.dll |    
-             mv vcpkg_installed/arm64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-arm64.dll |
+             mv vcpkg_installed/x64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-x64.so |    
+             mv vcpkg_installed/arm64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-arm64.so |
              
-             mv vcpkg_installed/x64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-x64.dll |
-             mv vcpkg_installed/arm64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-arm64.dll
+             mv vcpkg_installed/x64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-x64.dylib |
+             mv vcpkg_installed/arm64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-arm64.dylib
         
       #- name: List $RUNNER_WORKSPACE after build
       #  run: find $RUNNER_WORKSPACE
