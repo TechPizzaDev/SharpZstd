@@ -11,6 +11,7 @@ namespace SharpZstd.Interop
 #if NETCOREAPP3_0_OR_GREATER
         public static event DllImportResolver? ResolveLibrary;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2255", Justification = "<Pending>")]
         [System.Runtime.CompilerServices.ModuleInitializer]
         internal static void Initialize()
         {
