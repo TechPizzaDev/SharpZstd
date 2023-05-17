@@ -4,6 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 vcpkg_installed
+vcpkg_renamed_binaries
 
 # User-specific files
 *.rsuser
