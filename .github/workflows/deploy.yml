@@ -145,7 +145,7 @@ jobs:
       - name: Rename artifacts
         env:
           Package_Name: SharpZstd.Native
-          Lib_Version: "1.5.2"
+          Lib_Version: "1.5.5"
           Renamed_Dst: vcpkg_renamed_binaries
         run: mkdir $Renamed_Dst |
              mv vcpkg_installed/x86-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-x86.dll |

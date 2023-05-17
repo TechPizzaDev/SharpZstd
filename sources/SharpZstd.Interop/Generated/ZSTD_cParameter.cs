@@ -36,5 +36,9 @@ namespace SharpZstd.Interop
         ZSTD_c_experimentalParam13 = 1010,
         ZSTD_c_experimentalParam14 = 1011,
         ZSTD_c_experimentalParam15 = 1012,
+        ZSTD_c_experimentalParam16 = 1013,
+        ZSTD_c_experimentalParam17 = 1014,
+        ZSTD_c_experimentalParam18 = 1015,
+        ZSTD_c_experimentalParam19 = 1016,
     }
 }

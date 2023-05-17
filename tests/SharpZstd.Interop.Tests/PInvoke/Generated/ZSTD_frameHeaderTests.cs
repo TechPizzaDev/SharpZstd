@@ -24,7 +24,7 @@ namespace SharpZstd.Interop.UnitTests
         [Test]
         public static void SizeOfTest()
         {
-            Assert.That(sizeof(ZSTD_frameHeader), Is.EqualTo(40));
+            Assert.That(sizeof(ZSTD_frameHeader), Is.EqualTo(48));
         }
     }
 }

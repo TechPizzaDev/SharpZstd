@@ -17,7 +17,7 @@
 
   <!-- Settings that are only set for CI builds -->
   <PropertyGroup>
-    <PackageVersion>$(Version)-beta4</PackageVersion>
+    <PackageVersion>$(Version)-beta1</PackageVersion>
   </PropertyGroup>
 
   <!-- Settings that are only set for executables -->

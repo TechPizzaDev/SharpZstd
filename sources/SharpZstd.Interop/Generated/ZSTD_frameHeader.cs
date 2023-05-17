@@ -21,5 +21,11 @@ namespace SharpZstd.Interop
 
         [NativeTypeName("unsigned int")]
         public uint checksumFlag;
+
+        [NativeTypeName("unsigned int")]
+        public uint _reserved1;
+
+        [NativeTypeName("unsigned int")]
+        public uint _reserved2;
     }
 }
