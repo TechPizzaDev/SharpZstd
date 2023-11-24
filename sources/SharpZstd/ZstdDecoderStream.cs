@@ -11,7 +11,7 @@ namespace SharpZstd
 {
     public sealed class ZstdDecoderStream : Stream
     {
-        private static readonly int DefaultBufferSize = (int)Zstd.ZSTD_DStreamInSize();
+        private static readonly int DefaultBufferSize = (int) Zstd.ZSTD_DStreamInSize();
 
         private ZstdDecoder _decoder;
         private bool _leaveDecoderOpen;
@@ -276,10 +276,12 @@ namespace SharpZstd
         public override void WriteByte(byte value) => throw new NotSupportedException();
 
         /// <exception cref="NotSupportedException" />
-        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) => throw new NotSupportedException();
+        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) =>
+            throw new NotSupportedException();
 
         /// <exception cref="NotSupportedException" />
-        public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state) => throw new NotSupportedException();
+        public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state) =>
+            throw new NotSupportedException();
 
         /// <exception cref="NotSupportedException" />
         public override void EndWrite(IAsyncResult asyncResult) => throw new NotSupportedException();
@@ -295,7 +297,8 @@ namespace SharpZstd
         public override void Write(ReadOnlySpan<byte> buffer) => throw new NotSupportedException();
 
         /// <exception cref="NotSupportedException" />
-        public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken) => throw new NotSupportedException();
+        public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken) =>
+            throw new NotSupportedException();
 
         /// <inheritdoc/>
         public override int Read(Span<byte> buffer)
