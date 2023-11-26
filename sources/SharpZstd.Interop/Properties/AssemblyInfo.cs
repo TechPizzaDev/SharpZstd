@@ -3,6 +3,6 @@
 // values defined in project properties. For details of which attributes are included
 // and how to customise this process see: https://aka.ms/assembly-info-properties
 
-#if NET7_0_OR_GREATER
-[assembly: System.Runtime.CompilerServices.DisableRuntimeMarshalling]
-#endif
+using System.Runtime.CompilerServices;
+
+[assembly: DisableRuntimeMarshalling]
