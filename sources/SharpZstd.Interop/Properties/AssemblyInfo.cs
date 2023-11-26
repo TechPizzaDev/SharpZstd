@@ -4,5 +4,7 @@
 // and how to customise this process see: https://aka.ms/assembly-info-properties
 
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 [assembly: DisableRuntimeMarshalling]
+[module: DefaultCharSet(CharSet.Unicode)]
