@@ -23,7 +23,7 @@ runs:
       uses: lukka/get-cmake@latest
         
     - name: Setup vcpkg
-      uses: lukka/run-vcpkg@v10
+      uses: lukka/run-vcpkg@v11
       id: runvcpkg
       with:
         vcpkgJsonGlob: 'vcpkg.json'
@@ -40,12 +40,14 @@ runs:
       env:
         VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
-    #- name: List $RUNNER_WORKSPACE after build
-    #  run: find $RUNNER_WORKSPACE
-    #  shell: bash
-    
+    - name: List $RUNNER_WORKSPACE
+      if: ${{ vars.ACTIONS_STEP_DEBUG }}
+      run: find $RUNNER_WORKSPACE
+      shell: bash
+      
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.triplet }}
         path: vcpkg_installed/${{ inputs.triplet }}/*
+        if-no-files-found: error

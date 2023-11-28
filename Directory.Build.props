@@ -27,6 +27,7 @@
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>false</SignAssembly>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RepositoryRootDirectory>$(MSBuildThisFileDirectory)</RepositoryRootDirectory>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -64,4 +65,8 @@
     <PackageTags>zstd zstandard compression</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NativeAssetsPath>$(RepositoryRootDirectory)artifacts/natives</NativeAssetsPath>
+  </PropertyGroup>
+    
 </Project>
