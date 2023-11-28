@@ -25,31 +25,34 @@
     </ItemGroup>
 
     <ItemGroup>
-        <_NativeAsset Include="win-x86" Ext="dll" />
-        <_NativeAsset Include="win-x86" Ext="pdb" />
-        <_NativeAsset Include="win-x64" Ext="dll" />
-        <_NativeAsset Include="win-x64" Ext="pdb" />
-        <_NativeAsset Include="win-arm64" Ext="dll" />
-        <_NativeAsset Include="win-arm64" Ext="pdb" />
+        <_NativeAsset Include="dll" Id="win" Arch="x86" />
+        <_NativeAsset Include="pdb" Id="win" Arch="x86" />
+        <_NativeAsset Include="dll" Id="win" Arch="x64" />
+        <_NativeAsset Include="pdb" Id="win" Arch="x64" />
+        <_NativeAsset Include="dll" Id="win" Arch="arm64" />
+        <_NativeAsset Include="pdb" Id="win" Arch="arm64" />
         
-        <_NativeAsset Include="linux-x64" Ext="so" />
-        <_NativeAsset Include="linux-arm64" Ext="so" />
+        <_NativeAsset Include="so" Id="linux" Arch="x64" />
+        <_NativeAsset Include="so" Id="linux" Arch="arm64" />
         
-        <_NativeAsset Include="osx-x64" Ext="dylib" />
-        <_NativeAsset Include="osx-arm64" Ext="dylib" />
+        <_NativeAsset Include="dylib" Id="osx" Arch="x64" />
+        <_NativeAsset Include="dylib" Id="osx" Arch="arm64" />
 
-        <_NativeAssets Include="@(_NativeAsset)" Triplet="%(Identity)">
-            <IncludeStartsWithWinPrefix>$([System.String]::Copy('%(Triplet)').StartsWith('win'))</IncludeStartsWithWinPrefix>
-            <Dir Condition="'%(Dir)' == '' AND '%(IncludeStartsWithWinPrefix)'">bin</Dir>
-            <Dir Condition="'%(Dir)' == '' AND !'%(IncludeStartsWithWinPrefix)'">lib</Dir>
+        <_NativeAssets Include="@(_NativeAsset)">
+            <IsWindowsAsset>$([System.String]::Copy('%(Id)').StartsWith('win'))</IsWindowsAsset>
+            <Triplet Condition="'%(Triplet)' == '' AND '%(IsWindowsAsset)'">windows-%(Arch)</Triplet>
+            <SrcDir Condition="'%(SrcDir)' == '' AND '%(IsWindowsAsset)'">bin</SrcDir>
             
-            <File Condition="'%(File)' == ''">$(ZstdPackagedName).%(Ext)</File>
-            <SrcPath Condition="'%(SrcPath)' == ''">$(NativeAssetsPath)/%(Triplet)/%(Dir)/%(File)</SrcPath>
+            <Triplet Condition="'%(Triplet)' == ''">%(Id)-%(Arch)</Triplet>
+            <SrcDir Condition="'%(SrcDir)' == ''">lib</SrcDir>
             
-            <PackagePath Condition="'%(PackagePath)' == ''">runtimes/%(Triplet)/native</PackagePath>
+            <SrcName Condition="'%(SrcName)' == ''">$(ZstdPackagedName).%(Identity)</SrcName>
+            <SrcFile Condition="'%(SrcFile)' == ''">$(NativeAssetsPath)/%(Triplet)/%(SrcDir)/%(SrcName)</SrcFile>
+            
+            <PackagePath Condition="'%(PackagePath)' == ''">runtimes/%(Id)-%(Arch)/native</PackagePath>
         </_NativeAssets>
         
-        <Content Include="@(_NativeAssets -> '%(SrcPath)')" Pack="true" Visible="false" />
+        <Content Include="@(_NativeAssets -> '%(SrcFile)')" Pack="true" Visible="false" />
         
     </ItemGroup>
 
