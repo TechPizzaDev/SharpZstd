@@ -1,14 +1,16 @@
 diff --git a/build/cmake/lib/CMakeLists.txt b/build/cmake/lib/CMakeLists.txt
-index d97f0f3..61b221a 100644
+index d97f0f3..5f811c9 100644
 --- a/build/cmake/lib/CMakeLists.txt
 +++ b/build/cmake/lib/CMakeLists.txt
-@@ -128,7 +128,9 @@ if (ZSTD_BUILD_SHARED)
+@@ -128,7 +128,11 @@ if (ZSTD_BUILD_SHARED)
      set_target_properties(
              libzstd_shared
              PROPERTIES
 -            OUTPUT_NAME zstd
 +            NO_SONAME true
 +            PREFIX ""
++            LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
++            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 +            OUTPUT_NAME SharpZstd.Native
              VERSION ${zstd_VERSION_MAJOR}.${zstd_VERSION_MINOR}.${zstd_VERSION_PATCH}
              SOVERSION ${zstd_VERSION_MAJOR})
