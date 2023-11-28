@@ -141,28 +141,6 @@ jobs:
         with:
           path: ${{ env.OUT_DIR }}/
           
-      - name: Rename artifacts
-        if: false
-        env:
-          Package_Name: SharpZstd.Native
-          Lib_Version: "1.5.5"
-          Renamed_Dst: vcpkg_renamed_binaries
-        run: mkdir $Renamed_Dst |
-             mv vcpkg_installed/x86-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-x86.dll |
-             mv vcpkg_installed/x86-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-x86.pdb |
-     
-             mv vcpkg_installed/x64-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-x64.dll |
-             mv vcpkg_installed/x64-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-x64.pdb | 
-                 
-             mv vcpkg_installed/arm64-windows/bin/zstd.dll $Renamed_Dst/$Package_Name.win-arm64.dll |
-             mv vcpkg_installed/arm64-windows/bin/zstd.pdb $Renamed_Dst/$Package_Name.win-arm64.pdb | 
-   
-             mv vcpkg_installed/x64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-x64.so |    
-             mv vcpkg_installed/arm64-linux/lib/libzstd.so.$Lib_Version $Renamed_Dst/$Package_Name.linux-arm64.so |
-             
-             mv vcpkg_installed/x64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-x64.dylib |
-             mv vcpkg_installed/arm64-osx/lib/libzstd.$Lib_Version.dylib $Renamed_Dst/$Package_Name.osx-arm64.dylib
-        
       - name: List $RUNNER_WORKSPACE
         if: ${{ vars.ACTIONS_STEP_DEBUG }}
         run: find $RUNNER_WORKSPACE
@@ -170,21 +148,15 @@ jobs:
       
       - name: Restore
         run: dotnet restore
-
-      - name: Pack SharpZstd.Interop
-        run: dotnet pack ./sources/SharpZstd.Interop -c Release --no-restore --verbosity normal
-
-      - name: Restore from artifacts
-        run: dotnet restore -s ./artifacts/pkg/Release
-      
+        
       - name: Build
         run: dotnet build -c Release --no-restore 
         
       - name: Test
         run: dotnet test -c Release --no-restore --no-build
        
-      - name: Pack SharpZstd
-        run: dotnet pack ./sources/SharpZstd -c Release --no-restore --no-build --verbosity normal
+      - name: Pack
+        run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
       - name: Upload Nuget artifacts
         uses: actions/upload-artifact@v3
