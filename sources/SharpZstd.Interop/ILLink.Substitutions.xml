@@ -1,0 +1,10 @@
+<linker>
+    <assembly fullname="SharpZstd.Interop">
+        <type fullname="SharpZstd.Interop.Configuration" feature="SharpZstd.Interop.DisableResolveLibraryHook" featurevalue="true">
+            <field name="_disableResolveLibraryHook" value="true" initialize="true" />
+        </type>
+        <type fullname="SharpZstd.Interop.Configuration" feature="SharpZstd.Interop.DisableResolveLibraryHook" featurevalue="false">
+            <field name="_disableResolveLibraryHook" value="false" initialize="true" />
+        </type>
+    </assembly>
+</linker>

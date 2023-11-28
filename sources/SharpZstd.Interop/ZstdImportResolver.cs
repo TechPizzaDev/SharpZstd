@@ -15,7 +15,10 @@ namespace SharpZstd.Interop
         [System.Runtime.CompilerServices.ModuleInitializer]
         internal static void Initialize()
         {
-            NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), OnDllImport);
+            if (!Configuration.DisableResolveLibraryHook)
+            {
+                NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), OnDllImport);
+            }
         }
 
         private static IntPtr OnDllImport(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
@@ -48,7 +51,7 @@ namespace SharpZstd.Interop
                 Delegate[] resolvers = resolveLibrary.GetInvocationList();
                 foreach (Delegate resolver in resolvers)
                 {
-                    nativeLibrary = ((DllImportResolver)resolver).Invoke(libraryName, assembly, searchPath);
+                    nativeLibrary = ((DllImportResolver) resolver).Invoke(libraryName, assembly, searchPath);
                     if (nativeLibrary != IntPtr.Zero)
                     {
                         return true;
@@ -66,7 +69,7 @@ namespace SharpZstd.Interop
             string architecture,
             string extension)
         {
-            string name = $"{DllName}.{platform}-{architecture}.{extension}";
+            string name = $"{DllName}.{extension}";
             return name;
         }
 
