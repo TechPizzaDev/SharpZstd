@@ -13,6 +13,9 @@ name: vcpkg
 inputs:
   triplet:
     required: true
+  list_workspace:
+    default: "false"
+    required: false
 outputs: {}
 
 runs: 
@@ -41,7 +44,7 @@ runs:
         VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
     - name: List $RUNNER_WORKSPACE
-      if: ${{ vars.ACTIONS_STEP_DEBUG }}
+      if: ${{ inputs.list_workspace }}
       run: find $RUNNER_WORKSPACE
       shell: bash
       

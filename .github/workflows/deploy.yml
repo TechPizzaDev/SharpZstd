@@ -13,53 +13,53 @@ jobs:
   vcpkg_windows-x64:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          fetch-depth: 0
 
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-windows
+          list_workspace: ${{ vars.ACTIONS_STEP_DEBUG }}
           
 
   vcpkg_windows-x86:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          fetch-depth: 0
 
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x86-windows
+          list_workspace: ${{ vars.ACTIONS_STEP_DEBUG }}
 
 
   vcpkg_windows-arm64:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          fetch-depth: 0
 
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: arm64-windows
+          list_workspace: ${{ vars.ACTIONS_STEP_DEBUG }}
 
 
   vcpkg_linux-x64:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          fetch-depth: 0
 
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-linux
+          list_workspace: ${{ vars.ACTIONS_STEP_DEBUG }}
         env:
           CFLAGS: "-Xlinker -Bsymbolic"
           LDFLAGS: "-Xlinker -Bsymbolic"
@@ -68,10 +68,9 @@ jobs:
   vcpkg_linux-arm64:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          fetch-depth: 0
 
       - name: Install GNU AArch64 tools
         run: |
@@ -81,6 +80,7 @@ jobs:
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: arm64-linux
+          list_workspace: ${{ vars.ACTIONS_STEP_DEBUG }}
         env:
           CFLAGS: "-Xlinker -Bsymbolic"
           LDFLAGS: "-Xlinker -Bsymbolic"
@@ -89,27 +89,27 @@ jobs:
   vcpkg_osx-x64:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          fetch-depth: 0
 
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: x64-osx
+          list_workspace: ${{ vars.ACTIONS_STEP_DEBUG }}
       
       
   vcpkg_osx-arm64:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          fetch-depth: 0
 
       - uses: ./.github/workflows/vcpkg
         with:
           triplet: arm64-osx
+          list_workspace: ${{ vars.ACTIONS_STEP_DEBUG }}
         
 
   pack-nuget:
@@ -129,7 +129,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
