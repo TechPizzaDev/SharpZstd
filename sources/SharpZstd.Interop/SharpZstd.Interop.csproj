@@ -40,10 +40,10 @@
 
         <_NativeAssets Include="@(_NativeAsset)">
             <IsWindowsAsset>$([System.String]::Copy('%(Id)').StartsWith('win'))</IsWindowsAsset>
-            <Triplet Condition="'%(Triplet)' == '' AND '%(IsWindowsAsset)'">windows-%(Arch)</Triplet>
+            <Triplet Condition="'%(Triplet)' == '' AND '%(IsWindowsAsset)'">%(Arch)-windows</Triplet>
             <SrcDir Condition="'%(SrcDir)' == '' AND '%(IsWindowsAsset)'">bin</SrcDir>
             
-            <Triplet Condition="'%(Triplet)' == ''">%(Id)-%(Arch)</Triplet>
+            <Triplet Condition="'%(Triplet)' == ''">%(Arch)-%(Id)</Triplet>
             <SrcDir Condition="'%(SrcDir)' == ''">lib</SrcDir>
             
             <SrcName Condition="'%(SrcName)' == ''">$(ZstdPackagedName).%(Identity)</SrcName>
