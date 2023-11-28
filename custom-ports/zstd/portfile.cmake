@@ -7,6 +7,7 @@ vcpkg_from_github(
     PATCHES
         no-static-suffix.patch
         fix-emscripten-and-clang-cl.patch
+        use-private-name.patch
 )
 
 string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "static" ZSTD_BUILD_STATIC)
@@ -23,7 +24,7 @@ vcpkg_cmake_configure(
     OPTIONS
         -DZSTD_BUILD_SHARED=${ZSTD_BUILD_SHARED}
         -DZSTD_BUILD_STATIC=${ZSTD_BUILD_STATIC}
-        -DZSTD_LEGACY_SUPPORT=1
+        -DZSTD_LEGACY_SUPPORT=0
         -DZSTD_BUILD_TESTS=0
         -DZSTD_BUILD_CONTRIB=0
         -DZSTD_MULTITHREAD_SUPPORT=1
