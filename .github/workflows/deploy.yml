@@ -166,9 +166,12 @@ jobs:
       #- name: List $RUNNER_WORKSPACE after build
       #  run: find $RUNNER_WORKSPACE
       #  shell: bash
+      
+      - name: Pack SharpZstd.Interop
+        run: dotnet pack ./sources/SharpZstd.Interop -c Release --verbosity normal
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore -s ./artifacts/pkg/Release
       
       - name: Build
         run: dotnet build -c Release --no-restore 
@@ -176,8 +179,8 @@ jobs:
       - name: Test
         run: dotnet test -c Release --no-restore --no-build
        
-      - name: Pack
-        run: dotnet pack -c Release --no-restore --no-build --verbosity normal
+      - name: Pack SharpZstd
+        run: dotnet pack ./sources/SharpZstd -c Release --no-restore --no-build --verbosity normal
         
       - name: Upload Nuget artifact
         uses: actions/upload-artifact@v3

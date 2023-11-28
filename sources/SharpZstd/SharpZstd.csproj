@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="SharpZstd.Interop" Version="1.5.5-beta1" />
+        <PackageReference Include="SharpZstd.Interop" Version="$(PackageVersion)" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
