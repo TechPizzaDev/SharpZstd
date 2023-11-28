@@ -5,8 +5,8 @@ on:
 
 env:
   VCPKG_INSTALLED_DIR: vcpkg_installed
-  VCPKG_OVERLAY_PORTS: 'custom-ports'
-  VCPKG_OVERLAY_TRIPLETS: 'custom-triplets'
+  VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/custom-ports'
+  VCPKG_OVERLAY_TRIPLETS: '${{ github.workspace }}/custom-triplets'
 
 jobs:
 

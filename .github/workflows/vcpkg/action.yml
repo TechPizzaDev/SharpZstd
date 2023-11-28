@@ -30,7 +30,6 @@ runs:
       id: runvcpkg
       with:
         vcpkgJsonGlob: 'vcpkg.json'
-        appendedCacheKey: ${{ inputs.triplet }}
       env:
         VCPKG_DEFAULT_TRIPLET: ${{ inputs.triplet }}
     
