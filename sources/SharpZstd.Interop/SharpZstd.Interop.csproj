@@ -25,26 +25,32 @@
     </ItemGroup>
 
     <ItemGroup>
-        <_NativeAssetName Include="win-x86" Ext="dll" />
-        <_NativeAssetName Include="win-x86" Ext="pdb" />
-        <_NativeAssetName Include="win-x64" Ext="dll" />
-        <_NativeAssetName Include="win-x64" Ext="pdb" />
-        <_NativeAssetName Include="win-arm64" Ext="dll" />
-        <_NativeAssetName Include="win-arm64" Ext="pdb" />
-        <_NativeAssetName Include="linux-x64" Ext="so" />
-        <_NativeAssetName Include="linux-arm64" Ext="so" />
-        <_NativeAssetName Include="osx-x64" Ext="dylib" />
-        <_NativeAssetName Include="osx-arm64" Ext="dylib" />
+        <_NativeAsset Include="win-x86" Ext="dll" />
+        <_NativeAsset Include="win-x86" Ext="pdb" />
+        <_NativeAsset Include="win-x64" Ext="dll" />
+        <_NativeAsset Include="win-x64" Ext="pdb" />
+        <_NativeAsset Include="win-arm64" Ext="dll" />
+        <_NativeAsset Include="win-arm64" Ext="pdb" />
+        
+        <_NativeAsset Include="linux-x64" Ext="so" />
+        <_NativeAsset Include="linux-arm64" Ext="so" />
+        
+        <_NativeAsset Include="osx-x64" Ext="dylib" />
+        <_NativeAsset Include="osx-arm64" Ext="dylib" />
 
-        <_NativeAssets Include="@(_NativeAssetName)" Triplet="%(Identity)" />
-
-        <Content
-            Include="@(_NativeAssets -> '$(NativeAssetsPath)/%(Identity)/bin/$(ZstdPackagedName).%(Ext)')"
-            Pack="true" 
-            Visible="false">
+        <_NativeAssets Include="@(_NativeAsset)" Triplet="%(Identity)">
+            <IncludeStartsWithWinPrefix>$([System.String]::Copy('%(Triplet)').StartsWith('win'))</IncludeStartsWithWinPrefix>
+            <Dir Condition="'%(Dir)' == '' AND '%(IncludeStartsWithWinPrefix)'">bin</Dir>
+            <Dir Condition="'%(Dir)' == '' AND !'%(IncludeStartsWithWinPrefix)'">lib</Dir>
+            
+            <File Condition="'%(File)' == ''">$(ZstdPackagedName).%(Ext)</File>
+            <SrcPath Condition="'%(SrcPath)' == ''">$(NativeAssetsPath)/%(Triplet)/%(Dir)/%(File)</SrcPath>
+            
             <PackagePath Condition="'%(PackagePath)' == ''">runtimes/%(Triplet)/native</PackagePath>
-        </Content>
-
+        </_NativeAssets>
+        
+        <Content Include="@(_NativeAssets -> '%(SrcPath)')" Pack="true" Visible="false" />
+        
     </ItemGroup>
 
 </Project>
