@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+    <PropertyGroup>
+        <ZstdBinRoot>$(NativeAssetsPath)</ZstdBinRoot>
+        <ZstdPackagedName>SharpZstd.Native</ZstdPackagedName>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <_NativeAsset Include="dll" Id="win" Arch="x86" />
+        <_NativeAsset Include="pdb" Id="win" Arch="x86" />
+        <_NativeAsset Include="dll" Id="win" Arch="x64" />
+        <_NativeAsset Include="pdb" Id="win" Arch="x64" />
+        <_NativeAsset Include="dll" Id="win" Arch="arm64" />
+        <_NativeAsset Include="pdb" Id="win" Arch="arm64" />
+        
+        <_NativeAsset Include="so" Id="linux" Arch="x64" />
+        <_NativeAsset Include="so" Id="linux" Arch="arm64" />
+        
+        <_NativeAsset Include="dylib" Id="osx" Arch="x64" />
+        <_NativeAsset Include="dylib" Id="osx" Arch="arm64" />
+
+        <_NativeAssets Include="@(_NativeAsset)">
+            <IsWindowsAsset>$([System.String]::Copy('%(Id)').StartsWith('win'))</IsWindowsAsset>
+            <Triplet Condition="'%(Triplet)' == '' AND '%(IsWindowsAsset)'">%(Arch)-windows</Triplet>
+            <SrcDir Condition="'%(SrcDir)' == '' AND '%(IsWindowsAsset)'">bin</SrcDir>
+            
+            <Triplet Condition="'%(Triplet)' == ''">%(Arch)-%(Id)</Triplet>
+            <SrcDir Condition="'%(SrcDir)' == ''">lib</SrcDir>
+            
+            <SrcName Condition="'%(SrcName)' == ''">$(ZstdPackagedName).%(Identity)</SrcName>
+            <SrcFile Condition="'%(SrcFile)' == ''">$(NativeAssetsPath)/%(Triplet)/%(SrcDir)/%(SrcName)</SrcFile>
+            
+            <PackagePath Condition="'%(PackagePath)' == ''">runtimes/%(Id)-%(Arch)/native</PackagePath>
+        </_NativeAssets>
+
+        <Content Include="@(_NativeAssets -> '%(SrcFile)')" Pack="true">
+          <CopyToOutputDirectory Condition="'$(CopyNativeAssetsToOutput)' == 'true'">PreserveNewest</CopyToOutputDirectory>
+          <Visible Condition="'$(CopyNativeAssetsToOutput)' != 'true'">false</Visible>
+          <Link>%(PackagePath)/%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </Content>
+    </ItemGroup>
+    
+</Project>

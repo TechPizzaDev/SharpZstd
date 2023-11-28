@@ -8,11 +8,6 @@
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <ZstdBinRoot>$(NativeAssetsPath)</ZstdBinRoot>
-        <ZstdPackagedName>SharpZstd.Native</ZstdPackagedName>
-    </PropertyGroup>
-
     <ItemGroup>
         <PackageReference Include="PolySharp" Version="1.13.2">
             <PrivateAssets>all</PrivateAssets>
@@ -24,36 +19,6 @@
         <PackageReference Include="System.Memory" Version="4.5.5" />
     </ItemGroup>
 
-    <ItemGroup>
-        <_NativeAsset Include="dll" Id="win" Arch="x86" />
-        <_NativeAsset Include="pdb" Id="win" Arch="x86" />
-        <_NativeAsset Include="dll" Id="win" Arch="x64" />
-        <_NativeAsset Include="pdb" Id="win" Arch="x64" />
-        <_NativeAsset Include="dll" Id="win" Arch="arm64" />
-        <_NativeAsset Include="pdb" Id="win" Arch="arm64" />
-        
-        <_NativeAsset Include="so" Id="linux" Arch="x64" />
-        <_NativeAsset Include="so" Id="linux" Arch="arm64" />
-        
-        <_NativeAsset Include="dylib" Id="osx" Arch="x64" />
-        <_NativeAsset Include="dylib" Id="osx" Arch="arm64" />
-
-        <_NativeAssets Include="@(_NativeAsset)">
-            <IsWindowsAsset>$([System.String]::Copy('%(Id)').StartsWith('win'))</IsWindowsAsset>
-            <Triplet Condition="'%(Triplet)' == '' AND '%(IsWindowsAsset)'">%(Arch)-windows</Triplet>
-            <SrcDir Condition="'%(SrcDir)' == '' AND '%(IsWindowsAsset)'">bin</SrcDir>
-            
-            <Triplet Condition="'%(Triplet)' == ''">%(Arch)-%(Id)</Triplet>
-            <SrcDir Condition="'%(SrcDir)' == ''">lib</SrcDir>
-            
-            <SrcName Condition="'%(SrcName)' == ''">$(ZstdPackagedName).%(Identity)</SrcName>
-            <SrcFile Condition="'%(SrcFile)' == ''">$(NativeAssetsPath)/%(Triplet)/%(SrcDir)/%(SrcName)</SrcFile>
-            
-            <PackagePath Condition="'%(PackagePath)' == ''">runtimes/%(Id)-%(Arch)/native</PackagePath>
-        </_NativeAssets>
-        
-        <Content Include="@(_NativeAssets -> '%(SrcFile)')" Pack="true" Visible="false" />
-        
-    </ItemGroup>
-
+    <Import Project="$(RepositoryRootDirectory)\NativeAssets.targets" />
+    
 </Project>

@@ -5,10 +5,13 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <IsPackable>false</IsPackable>
+        <CopyNativeAssetsToOutput>true</CopyNativeAssetsToOutput>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\sources\SharpZstd\SharpZstd.csproj" />
     </ItemGroup>
 
+    <Import Project="$(RepositoryRootDirectory)\NativeAssets.targets" />
+    
 </Project>
