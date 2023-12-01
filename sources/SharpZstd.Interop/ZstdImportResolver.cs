@@ -8,12 +8,15 @@ namespace SharpZstd.Interop
     {
         public const string DllName = "SharpZstd.Native";
 
+        internal static void Initialize()
+        {
+            // no-op call for static constructor
+        }
+
 #if NETCOREAPP3_0_OR_GREATER
         public static event DllImportResolver? ResolveLibrary;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2255", Justification = "<Pending>")]
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        internal static void Initialize()
+        static ZstdImportResolver()
         {
             if (!Configuration.DisableResolveLibraryHook)
             {
