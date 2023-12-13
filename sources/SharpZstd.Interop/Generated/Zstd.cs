@@ -645,7 +645,7 @@ namespace SharpZstd.Interop
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
         [Obsolete("use advanced API to access custom parameters")]
-        public static extern nuint ZSTD_compressBegin_usingCDict_advanced([NativeTypeName("ZSTD_CCtx *const")] ZSTD_CCtx* cctx, [NativeTypeName("const ZSTD_CDict *const")] ZSTD_CDict* cdict, [NativeTypeName("const ZSTD_frameParameters")] ZSTD_frameParameters fParams, [NativeTypeName("const unsigned long long")] ulong pledgedSrcSize);
+        public static extern nuint ZSTD_compressBegin_usingCDict_advanced(ZSTD_CCtx* cctx, [NativeTypeName("const ZSTD_CDict *const")] ZSTD_CDict* cdict, [NativeTypeName("const ZSTD_frameParameters")] ZSTD_frameParameters fParams, [NativeTypeName("const unsigned long long")] ulong pledgedSrcSize);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
@@ -711,7 +711,7 @@ namespace SharpZstd.Interop
         public const int ZSTD_VERSION_NUMBER = (1 * 100 * 100 + 5 * 100 + 5);
 
         [NativeTypeName("#define ZSTD_VERSION_STRING ZSTD_EXPAND_AND_QUOTE(ZSTD_LIB_VERSION)")]
-        public static ReadOnlySpan<byte> ZSTD_VERSION_STRING => new byte[] { 0x31, 0x2E, 0x35, 0x2E, 0x35, 0x00 };
+        public static ReadOnlySpan<byte> ZSTD_VERSION_STRING => "1.5.5"u8;
 
         [NativeTypeName("#define ZSTD_CLEVEL_DEFAULT 3")]
         public const int ZSTD_CLEVEL_DEFAULT = 3;
@@ -741,7 +741,7 @@ namespace SharpZstd.Interop
         public const ulong ZSTD_CONTENTSIZE_ERROR = unchecked(0UL - 2);
 
         [NativeTypeName("#define ZSTD_MAX_INPUT_SIZE ((sizeof(size_t)==8) ? 0xFF00FF00FF00FF00LLU : 0xFF00FF00U)")]
-        public static readonly ulong ZSTD_MAX_INPUT_SIZE = ((sizeof(nuint) == 8) ? 0xFF00FF00FF00FF00U : 0xFF00FF00U);
+        public static readonly ulong ZSTD_MAX_INPUT_SIZE = ((sizeof(nuint) == 8) ? 0xFF00FF00FF00FF00UL : 0xFF00FF00U);
 
         [NativeTypeName("#define ZSTD_FRAMEHEADERSIZE_MAX 18")]
         public const int ZSTD_FRAMEHEADERSIZE_MAX = 18;
