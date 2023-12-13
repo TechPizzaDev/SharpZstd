@@ -5,18 +5,14 @@
         <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.0;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <LangVersion>10</LangVersion>
-        <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="PolySharp" Version="1.13.2">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+        <PackageReference Include="PolySharp" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="System.Memory" Version="4.5.5" />
+        <PackageReference Include="System.Memory" />
     </ItemGroup>
 
     <Import Project="$(RepositoryRootDirectory)\NativeAssets.targets" />

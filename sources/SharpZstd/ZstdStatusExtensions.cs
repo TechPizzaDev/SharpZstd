@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using SharpZstd.Interop;
@@ -40,7 +39,7 @@ namespace SharpZstd
         public static string? GetString(sbyte* ptr)
         {
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP1_1_OR_GREATER
-            return Marshal.PtrToStringUTF8((IntPtr)ptr);
+            return Marshal.PtrToStringUTF8((nint)ptr);
 #else
             if (ptr == null)
             {
