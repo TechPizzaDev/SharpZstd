@@ -90,16 +90,13 @@ namespace SharpZstd
                 written = (int)outputBuf.pos;
                 consumed = (int)inputBuf.pos;
 
-                if (outputBuf.pos == outputBuf.size)
+                if (!finished || outputBuf.pos == outputBuf.size)
                 {
                     return OperationStatus.DestinationTooSmall;
                 }
-                if (isFinalBlock)
-                {
-                    Debug.Assert(inputBuf.pos == inputBuf.size);
-                    return OperationStatus.Done;
-                }
-                return OperationStatus.NeedMoreData;
+
+                Debug.Assert(inputBuf.pos == inputBuf.size);
+                return OperationStatus.Done;
             }
             finally
             {
@@ -107,7 +104,10 @@ namespace SharpZstd
             }
         }
 
-        public OperationStatus FlushStream(Span<byte> output, out int written, bool isFinalBlock = false)
+        public OperationStatus FlushStream(
+            Span<byte> output,
+            out int written,
+            bool isFinalBlock = false)
         {
             DangerousAddRef();
             try
@@ -126,6 +126,7 @@ namespace SharpZstd
 
                     if (remaining != 0)
                     {
+                        Debug.Assert(outputBuf.pos == outputBuf.size);
                         return OperationStatus.DestinationTooSmall;
                     }
                     return OperationStatus.Done;
