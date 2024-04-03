@@ -12,7 +12,8 @@
 
     <!-- Default settings that are used by other settings -->
     <PropertyGroup>
-        <BaseArtifactsPath>$(MSBuildThisFileDirectory)artifacts/</BaseArtifactsPath>
+        <RepositoryRootDirectory>$(MSBuildThisFileDirectory)</RepositoryRootDirectory>
+        <BaseArtifactsPath>$(RepositoryRootDirectory)artifacts/</BaseArtifactsPath>
         <BaseArtifactsPathSuffix>$(SharpZstdProjectCategory)/$(MSBuildProjectName)</BaseArtifactsPathSuffix>
         <RepositoryUrl>https://github.com/TechPizzaDev/SharpZstd</RepositoryUrl>
     </PropertyGroup>
@@ -27,7 +28,6 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <SignAssembly>false</SignAssembly>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <RepositoryRootDirectory>$(MSBuildThisFileDirectory)</RepositoryRootDirectory>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
