@@ -109,12 +109,13 @@ namespace SharpZstd
             ReadOnlySpan<byte> src = _buffer.AsSpan(_bufferPos, _bufferSize - _bufferPos);
 
             OperationStatus status = _decoder.DecompressStream(
-                src, dst, out written, out int consumed, out inputHint, false, true);
+                src, dst, out written, out int consumed, out inputHint, true);
 
             _bufferPos += consumed;
 
-            if (inputHint == 0 && !_consumeMultipleFrames)
+            if (status == OperationStatus.Done && !_consumeMultipleFrames)
             {
+                Debug.Assert(inputHint == 0);
                 _finished = true;
                 return -1;
             }
@@ -143,7 +144,7 @@ namespace SharpZstd
             return toRead;
         }
 
-        private int ReadCore(Span<byte> output)
+        private int ReadCore(Span<byte> dst)
         {
             EnsureNotDisposed();
 
@@ -155,7 +156,7 @@ namespace SharpZstd
             int totalWritten = 0;
             do
             {
-                int toRead = ConsumeInput(output.Slice(totalWritten), out int written, out int inputHint);
+                int toRead = ConsumeInput(dst.Slice(totalWritten), out int written, out int inputHint);
                 totalWritten += written;
 
                 if (toRead < 0)
@@ -172,7 +173,7 @@ namespace SharpZstd
                 {
                     if (inputHint > 0)
                     {
-                        ThrowEndOfStreamException();
+                        ThrowEndOfStream();
                     }
 
                     _finished = true;
@@ -229,7 +230,7 @@ namespace SharpZstd
                         {
                             if (inputHint > 0)
                             {
-                                ThrowEndOfStreamException();
+                                ThrowEndOfStream();
                             }
 
                             _finished = true;
@@ -368,11 +369,12 @@ namespace SharpZstd
         }
 
         [DoesNotReturn]
-        private static void ThrowEndOfStreamException()
+        private static void ThrowEndOfStream()
         {
             throw new EndOfStreamException();
         }
-
+        
+        [DoesNotReturn]
         private static void ThrowInvalidBeginCall()
         {
             throw new InvalidOperationException();

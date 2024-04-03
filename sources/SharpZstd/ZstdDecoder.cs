@@ -61,20 +61,21 @@ namespace SharpZstd
             out int written,
             out int consumed,
             out int inputHint,
-            bool isFinalBlock = false,
             bool throwOnError = false)
         {
             DangerousAddRef();
             try
             {
-                fixed (byte* inputPtr = input)
-                fixed (byte* outputPtr = output)
-                {
-                    ZSTD_DCtx* cctx = DangerousGetHandle();
-                    ZSTD_outBuffer outputBuf = new() { dst = outputPtr, size = (nuint)output.Length, pos = 0 };
-                    ZSTD_inBuffer inputBuf = new() { src = inputPtr, size = (nuint)input.Length, pos = 0 };
+                ZSTD_DCtx* dctx = DangerousGetHandle();
 
-                    nuint status = ZSTD_decompressStream(cctx, &outputBuf, &inputBuf);
+                fixed (byte* srcPtr = input)
+                fixed (byte* dstPtr = output)
+                {
+                    ZSTD_outBuffer outputBuf = new() { dst = dstPtr, size = (nuint)output.Length, pos = 0 };
+                    ZSTD_inBuffer inputBuf = new() { src = srcPtr, size = (nuint)input.Length, pos = 0 };
+
+                    nuint status = ZSTD_decompressStream(dctx, &outputBuf, &inputBuf);
+
                     written = (int)outputBuf.pos;
                     consumed = (int)inputBuf.pos;
 
@@ -89,14 +90,14 @@ namespace SharpZstd
                     }
 
                     inputHint = (int)status;
+                    if (inputHint == 0)
+                    {
+                        return OperationStatus.Done;
+                    }
+
                     if (outputBuf.pos == outputBuf.size)
                     {
                         return OperationStatus.DestinationTooSmall;
-                    }
-
-                    if (isFinalBlock)
-                    {
-                        return OperationStatus.Done;
                     }
                     return OperationStatus.NeedMoreData;
                 }
