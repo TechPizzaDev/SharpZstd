@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.Serialization;
 using SharpZstd.Interop;
 
@@ -8,7 +7,7 @@ namespace SharpZstd
 #if !NET8_0_OR_GREATER
     [Serializable]
 #endif
-    public class ZstdException : IOException
+    public class ZstdException : Exception
     {
         private const string ErrorCodeName = "ErrorCode";
 
