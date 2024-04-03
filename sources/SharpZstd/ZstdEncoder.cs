@@ -47,7 +47,9 @@ namespace SharpZstd
             DangerousAddRef();
             try
             {
-                ZSTD_CCtx_setParameter(DangerousGetHandle(), parameter, value).ThrowIfZstdError();
+                ZSTD_CCtx* cctx = DangerousGetHandle();
+                nuint status = ZSTD_CCtx_setParameter(cctx, parameter, value);
+                ZstdException.ThrowIfError(status);
             }
             finally
             {
@@ -80,7 +82,7 @@ namespace SharpZstd
                         inputBuf.src = inputPtr;
 
                         nuint remaining = ZSTD_compressStream2(cctx, &outputBuf, &inputBuf, mode);
-                        remaining.ThrowIfZstdError();
+                        ZstdException.ThrowIfError(remaining);
 
                         finished = isFinalBlock ? (remaining == 0) : (inputBuf.pos == inputBuf.size);
                     }
@@ -120,7 +122,7 @@ namespace SharpZstd
                     ZSTD_EndDirective mode = isFinalBlock ? ZSTD_e_end : ZSTD_e_flush;
 
                     nuint remaining = ZSTD_compressStream2(cctx, &outputBuf, &inputBuf, mode);
-                    remaining.ThrowIfZstdError();
+                    ZstdException.ThrowIfError(remaining);
 
                     written = (int)outputBuf.pos;
 
@@ -143,7 +145,9 @@ namespace SharpZstd
             DangerousAddRef();
             try
             {
-                ZSTD_CCtx_reset(DangerousGetHandle(), resetDirective).ThrowIfZstdError();
+                ZSTD_CCtx* cctx = DangerousGetHandle();
+                nuint status = ZSTD_CCtx_reset(cctx, resetDirective);
+                ZstdException.ThrowIfError(status);
             }
             finally
             {
@@ -153,7 +157,8 @@ namespace SharpZstd
 
         protected override bool ReleaseHandle()
         {
-            nuint status = ZSTD_freeCCtx(DangerousGetHandle());
+            ZSTD_CCtx* cctx = DangerousGetHandle();
+            nuint status = ZSTD_freeCCtx(cctx);
             return ZSTD_isError(status) == 0;
         }
     }

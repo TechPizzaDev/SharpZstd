@@ -45,7 +45,9 @@ namespace SharpZstd
             DangerousAddRef();
             try
             {
-                ZSTD_DCtx_setParameter(DangerousGetHandle(), parameter, value).ThrowIfZstdError();
+                ZSTD_DCtx* dctx = DangerousGetHandle();
+                nuint status = ZSTD_DCtx_setParameter(dctx, parameter, value);
+                ZstdException.ThrowIfError(status);
             }
             finally
             {
@@ -80,7 +82,7 @@ namespace SharpZstd
                     {
                         if (throwOnError)
                         {
-                            ZstdStatusExtensions.ThrowZstdException(status);
+                            ZstdException.Throw(status);
                         }
                         inputHint = 0;
                         return OperationStatus.InvalidData;
@@ -105,52 +107,13 @@ namespace SharpZstd
             }
         }
 
-        public OperationStatus FlushStream(Span<byte> output, out int written, bool throwOnError = false)
+        public OperationStatus FlushStream(
+            Span<byte> output,
+            out int written,
+            out int inputHint,
+            bool throwOnError = false)
         {
-            DangerousAddRef();
-            try
-            {
-                ZSTD_DCtx* cctx = DangerousGetHandle();
-                ZSTD_outBuffer outputBuf = new() { size = (nuint)output.Length, pos = 0 };
-                ZSTD_inBuffer inputBuf = new() { src = null, size = 0, pos = 0 };
-
-                bool invalid = false;
-                nuint status = 0;
-                while (outputBuf.pos != outputBuf.size)
-                {
-                    fixed (byte* outputPtr = output)
-                    {
-                        outputBuf.dst = outputPtr;
-                        status = ZSTD_decompressStream(cctx, &outputBuf, &inputBuf);
-                    }
-
-                    if (ZSTD_isError(status) != 0)
-                    {
-                        invalid = true;
-                        break;
-                    }
-                }
-
-                written = (int)outputBuf.pos;
-                if (invalid)
-                {
-                    if (throwOnError)
-                    {
-                        ZstdStatusExtensions.ThrowZstdException(status);
-                    }
-                    return OperationStatus.InvalidData;
-                }
-
-                if (outputBuf.pos == outputBuf.size)
-                {
-                    return OperationStatus.DestinationTooSmall;
-                }
-                return OperationStatus.Done;
-            }
-            finally
-            {
-                DangerousRelease();
-            }
+            return DecompressStream(ReadOnlySpan<byte>.Empty, output, out written, out _, out inputHint, throwOnError);
         }
 
         public void Reset(ZSTD_ResetDirective resetDirective)
@@ -158,7 +121,9 @@ namespace SharpZstd
             DangerousAddRef();
             try
             {
-                ZSTD_DCtx_reset(DangerousGetHandle(), resetDirective).ThrowIfZstdError();
+                ZSTD_DCtx* dctx = DangerousGetHandle();
+                nuint status = ZSTD_DCtx_reset(dctx, resetDirective);
+                ZstdException.ThrowIfError(status);
             }
             finally
             {
@@ -168,7 +133,8 @@ namespace SharpZstd
 
         protected override bool ReleaseHandle()
         {
-            nuint status = ZSTD_freeDCtx(DangerousGetHandle());
+            ZSTD_DCtx* dctx = DangerousGetHandle();
+            nuint status = ZSTD_freeDCtx(dctx);
             return ZSTD_isError(status) == 0;
         }
     }
