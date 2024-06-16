@@ -15,6 +15,8 @@
         <BaseArtifactsPath>$(MSBuildThisFileDirectory)artifacts/</BaseArtifactsPath>
         <BaseArtifactsPathSuffix>$(SharpZstdProjectCategory)/$(MSBuildProjectName)</BaseArtifactsPathSuffix>
         <RepositoryUrl>https://github.com/TechPizzaDev/SharpZstd</RepositoryUrl>
+        <ZstdVersion>1.5.5</ZstdVersion>
+        <VersionBuild>2</VersionBuild>
     </PropertyGroup>
 
     <!-- Default settings that explicitly differ from the Sdk.props defaults  -->
@@ -41,9 +43,10 @@
         <ContinuousIntegrationBuild Condition="'$(GITHUB_RUN_ID)' != ''">true</ContinuousIntegrationBuild>
         <PackageOutputPath>$(BaseArtifactsPath)pkg/$(Configuration)/</PackageOutputPath>
         <Product>SharpZstd</Product>
-        <ZstdVersion>1.5.5</ZstdVersion>
-        <VersionPrefix>$(ZstdVersion)</VersionPrefix>
-        <VersionSuffix Condition="'$(EXCLUDE_SUFFIX_FROM_VERSION)' != 'true'"></VersionSuffix>
+        <VersionPrefix>$(ZstdVersion).$(VersionBuild)</VersionPrefix>
+        
+        <VersionSuffix>preview</VersionSuffix>
+        <VersionSuffix Condition="'$(GH_EVENT_PRERELEASE)' != 'true'"></VersionSuffix>
         <VersionSuffix Condition="'$(GITHUB_EVENT_NAME)' == 'pull_request'">pr</VersionSuffix>
     </PropertyGroup>
 

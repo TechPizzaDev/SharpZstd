@@ -15,11 +15,6 @@
         <NoWarn>$(NoWarn);NU5105;NU5100</NoWarn>
     </PropertyGroup>
 
-    <!-- Settings that are only set for CI builds -->
-    <PropertyGroup>
-        <PackageVersion>$(Version)-beta2</PackageVersion>
-    </PropertyGroup>
-
     <!-- Settings that are only set for executables -->
     <PropertyGroup Condition="'$(OutputType)' != 'Library' AND '$(UseWindowsForms)' != 'true'">
         <PublishTrimmed>true</PublishTrimmed>
