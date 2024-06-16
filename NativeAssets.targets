@@ -2,7 +2,7 @@
 <Project>
 
     <PropertyGroup>
-        <ZstdBinRoot>$(NativeAssetsPath)</ZstdBinRoot>
+        <ZstdBinRoot>$(RepositoryRootDirectory)artifacts/natives</ZstdBinRoot>
         <ZstdPackagedName>SharpZstd.Native</ZstdPackagedName>
     </PropertyGroup>
     
@@ -29,7 +29,7 @@
             <SrcDir Condition="'%(SrcDir)' == ''">lib</SrcDir>
             
             <SrcName Condition="'%(SrcName)' == ''">$(ZstdPackagedName).%(Identity)</SrcName>
-            <SrcFile Condition="'%(SrcFile)' == ''">$(NativeAssetsPath)/%(Triplet)/%(SrcDir)/%(SrcName)</SrcFile>
+            <SrcFile Condition="'%(SrcFile)' == ''">$(ZstdBinRoot)/%(Triplet)/%(SrcDir)/%(SrcName)</SrcFile>
             
             <PackagePath Condition="'%(PackagePath)' == ''">runtimes/%(Id)-%(Arch)/native</PackagePath>
         </_NativeAssets>
