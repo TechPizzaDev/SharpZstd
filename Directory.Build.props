@@ -45,7 +45,7 @@
         <Product>SharpZstd</Product>
         <VersionPrefix>$(ZstdVersion).$(VersionBuild)</VersionPrefix>
         
-        <VersionSuffix>preview</VersionSuffix>
+        <VersionSuffix>rc</VersionSuffix>
         <VersionSuffix Condition="'$(GH_EVENT_PRERELEASE)' != 'true'"></VersionSuffix>
         <VersionSuffix Condition="'$(GITHUB_EVENT_NAME)' == 'pull_request'">pr</VersionSuffix>
     </PropertyGroup>
