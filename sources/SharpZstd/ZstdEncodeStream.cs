@@ -228,7 +228,7 @@ namespace SharpZstd
         {
             try
             {
-                if (disposing)
+                if (_stream != null && disposing)
                 {
                     FlushCore(true);
                 }
@@ -299,7 +299,10 @@ namespace SharpZstd
         {
             try
             {
-                await FlushAsyncCore(true, false, CancellationToken.None).ConfigureAwait(false);
+                if (_stream != null)
+                {
+                    await FlushAsyncCore(true, false, CancellationToken.None).ConfigureAwait(false);
+                }
             }
             finally
             {
