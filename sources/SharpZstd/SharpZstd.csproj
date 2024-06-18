@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Content Include="Docs.xml" />
+    </ItemGroup>
+    
+    <ItemGroup>
         <ProjectReference Include="..\SharpZstd.Interop\SharpZstd.Interop.csproj" />
     </ItemGroup>
 

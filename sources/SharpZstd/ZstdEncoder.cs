@@ -11,6 +11,8 @@ namespace SharpZstd
 
     public sealed unsafe class ZstdEncoder : SafeHandle
     {
+        private static readonly int DefaultLevel = ZSTD_defaultCLevel();
+
         public ZstdEncoder() : this(CreateHandle(), true)
         {
         }
@@ -31,12 +33,15 @@ namespace SharpZstd
             return handle;
         }
 
-        internal void DangerousAddRef()
+        /// <inheritdoc cref="SafeHandle.DangerousAddRef(ref bool)"/>
+        internal bool DangerousAddRef()
         {
             bool success = false;
             DangerousAddRef(ref success);
+            return success;
         }
 
+        /// <inheritdoc cref="SafeHandle.DangerousGetHandle"/>
         public new ZSTD_CCtx* DangerousGetHandle()
         {
             return (ZSTD_CCtx*)base.DangerousGetHandle();
@@ -57,9 +62,41 @@ namespace SharpZstd
             }
         }
 
+        /// <summary>
+        /// Tries to compress a source span into a destination span.
+        /// </summary>
+        /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/GenericOperation/*' />
+        public OperationStatus Compress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
+        {
+            DangerousAddRef();
+            try
+            {
+                ZSTD_CCtx* cctx = DangerousGetHandle();
+
+                fixed (byte* srcPtr = source)
+                fixed (byte* dstPtr = destination)
+                {
+                    nuint result = ZSTD_compress2(cctx, dstPtr, (nuint)destination.Length, srcPtr, (nuint)source.Length);
+                    OperationStatus status = ResultToStatus(result, out written);
+                    return status;
+                }
+            }
+            finally
+            {
+                DangerousRelease();
+            }
+        }
+
+        /// <summary>
+        /// Tries to compress a source span into a destination span.
+        /// </summary>
+        /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Encode/FinalBlock/*' />
+        /// <include file="Docs.xml" path='//Returns/FullContextFlush/*' />
         public OperationStatus CompressStream(
-            ReadOnlySpan<byte> input,
-            Span<byte> output,
+            ReadOnlySpan<byte> source,
+            Span<byte> destination,
             out int written,
             out int consumed,
             bool isFinalBlock = false)
@@ -68,37 +105,30 @@ namespace SharpZstd
             try
             {
                 ZSTD_CCtx* cctx = DangerousGetHandle();
-                ZSTD_outBuffer outputBuf = new() { size = (nuint)output.Length, pos = 0 };
-                ZSTD_inBuffer inputBuf = new() { size = (nuint)input.Length, pos = 0 };
-                ZSTD_EndDirective mode = isFinalBlock ? ZSTD_e_end : ZSTD_e_continue;
 
-                bool finished;
-                do
+                fixed (byte* srcPtr = source)
+                fixed (byte* dstPtr = destination)
                 {
-                    fixed (byte* inputPtr = input)
-                    fixed (byte* outputPtr = output)
+                    ZSTD_outBuffer outputBuf = new() { dst = dstPtr, size = (nuint)destination.Length, pos = 0 };
+                    ZSTD_inBuffer inputBuf = new() { src = srcPtr, size = (nuint)source.Length, pos = 0 };
+                    ZSTD_EndDirective mode = isFinalBlock ? ZSTD_e_end : ZSTD_e_continue;
+
+                    nuint remaining = ZSTD_compressStream2(cctx, &outputBuf, &inputBuf, mode);
+                    ZstdException.ThrowIfError(remaining);
+
+                    bool finished = isFinalBlock ? (remaining == 0) : (inputBuf.pos == inputBuf.size);
+
+                    written = (int)outputBuf.pos;
+                    consumed = (int)inputBuf.pos;
+
+                    if (!finished || outputBuf.pos == outputBuf.size)
                     {
-                        outputBuf.dst = outputPtr;
-                        inputBuf.src = inputPtr;
-
-                        nuint remaining = ZSTD_compressStream2(cctx, &outputBuf, &inputBuf, mode);
-                        ZstdException.ThrowIfError(remaining);
-
-                        finished = isFinalBlock ? (remaining == 0) : (inputBuf.pos == inputBuf.size);
+                        return OperationStatus.DestinationTooSmall;
                     }
+
+                    Debug.Assert(inputBuf.pos == inputBuf.size);
+                    return OperationStatus.Done;
                 }
-                while (!finished && outputBuf.pos != outputBuf.size);
-
-                written = (int)outputBuf.pos;
-                consumed = (int)inputBuf.pos;
-
-                if (!finished || outputBuf.pos == outputBuf.size)
-                {
-                    return OperationStatus.DestinationTooSmall;
-                }
-
-                Debug.Assert(inputBuf.pos == inputBuf.size);
-                return OperationStatus.Done;
             }
             finally
             {
@@ -106,18 +136,25 @@ namespace SharpZstd
             }
         }
 
+        /// <summary>
+        /// Tries to flush compressed data into a destination span.
+        /// </summary>
+        /// <include file="Docs.xml" path='//Params/Encode/WriteSpan/*' />
+        /// <include file="Docs.xml" path='//Params/Encode/FinalBlock/*' />
+        /// <include file="Docs.xml" path='//Returns/FullContextFlush/*' />
         public OperationStatus FlushStream(
-            Span<byte> output,
+            Span<byte> destination,
             out int written,
             bool isFinalBlock = false)
         {
             DangerousAddRef();
             try
             {
-                fixed (byte* outputPtr = output)
+                ZSTD_CCtx* cctx = DangerousGetHandle();
+
+                fixed (byte* dstPtr = destination)
                 {
-                    ZSTD_CCtx* cctx = DangerousGetHandle();
-                    ZSTD_outBuffer outputBuf = new() { dst = outputPtr, size = (nuint)output.Length, pos = 0 };
+                    ZSTD_outBuffer outputBuf = new() { dst = dstPtr, size = (nuint)destination.Length, pos = 0 };
                     ZSTD_inBuffer inputBuf = new() { src = null, size = 0, pos = 0 };
                     ZSTD_EndDirective mode = isFinalBlock ? ZSTD_e_end : ZSTD_e_flush;
 
@@ -140,13 +177,14 @@ namespace SharpZstd
             }
         }
 
-        public void Reset(ZSTD_ResetDirective resetDirective)
+        /// <include file="Docs.xml" path='//Methods/Reset/*' />
+        public void Reset(ZSTD_ResetDirective directive = ZSTD_ResetDirective.ZSTD_reset_session_only)
         {
             DangerousAddRef();
             try
             {
                 ZSTD_CCtx* cctx = DangerousGetHandle();
-                nuint status = ZSTD_CCtx_reset(cctx, resetDirective);
+                nuint status = ZSTD_CCtx_reset(cctx, directive);
                 ZstdException.ThrowIfError(status);
             }
             finally
@@ -154,12 +192,67 @@ namespace SharpZstd
                 DangerousRelease();
             }
         }
-
+        
+        /// <inheritdoc/>
         protected override bool ReleaseHandle()
         {
             ZSTD_CCtx* cctx = DangerousGetHandle();
             nuint status = ZSTD_freeCCtx(cctx);
             return ZSTD_isError(status) == 0;
+        }
+
+        /// <summary>Gets the maximum expected compressed length for the provided input size.</summary>
+        /// <param name="inputSize">The input size to get the maximum expected compressed length from.</param>
+        /// <returns>
+        /// A number representing the maximum compressed length for the provided input size,
+        /// producing zero if the input size is too large.
+        /// </returns>
+        public static nuint GetMaxCompressedLength(nuint inputSize)
+        {
+            return ZSTD_compressBound(inputSize);
+        }
+
+        /// <summary>Tries to compress a source span into a destination span.</summary>
+        /// <include file="Docs.xml" path='//Params/EncodeConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public static bool TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
+        {
+            return TryCompress(source, destination, out written, DefaultLevel);
+        }
+
+        /// <summary>Tries to compress a source span into a destination span.</summary>
+        /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
+        /// <include file='Docs.xml' path='//Params/Encode/CompressionLevel'/>
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public static bool TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written, int compressionLevel)
+        {
+            fixed (byte* srcPtr = source)
+            fixed (byte* dstPtr = destination)
+            {
+                nuint result = ZSTD_compress(dstPtr, (nuint)destination.Length, srcPtr, (nuint)source.Length, compressionLevel);
+                OperationStatus status = ResultToStatus(result, out written);
+                return status == OperationStatus.Done;
+            }
+        }
+
+        private static OperationStatus ResultToStatus(nuint result, out int written)
+        {
+            if (ZSTD_isError(result) == 0)
+            {
+                written = (int)result;
+                return OperationStatus.Done;
+            }
+
+            if (ZSTD_getErrorCode(result) == ZSTD_ErrorCode.ZSTD_error_dstSize_tooSmall)
+            {
+                written = 0;
+                return OperationStatus.DestinationTooSmall;
+            }
+
+            ZstdException.Throw(result);
+
+            written = 0;
+            return OperationStatus.InvalidData;
         }
     }
 }

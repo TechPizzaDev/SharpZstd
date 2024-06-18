@@ -17,6 +17,7 @@ namespace SharpZstd
         {
         }
 
+        /// <inheritdoc/>
         public override bool IsInvalid => handle == IntPtr.Zero;
 
         private static ZSTD_DCtx* CreateHandle()
@@ -29,12 +30,15 @@ namespace SharpZstd
             return handle;
         }
 
-        internal void DangerousAddRef()
+        /// <inheritdoc cref="SafeHandle.DangerousAddRef(ref bool)"/>
+        internal bool DangerousAddRef()
         {
             bool success = false;
             DangerousAddRef(ref success);
+            return success;
         }
 
+        /// <inheritdoc cref="SafeHandle.DangerousGetHandle"/>
         public new ZSTD_DCtx* DangerousGetHandle()
         {
             return (ZSTD_DCtx*)base.DangerousGetHandle();
@@ -55,9 +59,12 @@ namespace SharpZstd
             }
         }
 
+        /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Decode/InputHint/*' />
+        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         public OperationStatus DecompressStream(
-            ReadOnlySpan<byte> input,
-            Span<byte> output,
+            ReadOnlySpan<byte> source,
+            Span<byte> destination,
             out int written,
             out int consumed,
             out int inputHint,
@@ -68,11 +75,11 @@ namespace SharpZstd
             {
                 ZSTD_DCtx* dctx = DangerousGetHandle();
 
-                fixed (byte* srcPtr = input)
-                fixed (byte* dstPtr = output)
+                fixed (byte* srcPtr = source)
+                fixed (byte* dstPtr = destination)
                 {
-                    ZSTD_outBuffer outputBuf = new() { dst = dstPtr, size = (nuint)output.Length, pos = 0 };
-                    ZSTD_inBuffer inputBuf = new() { src = srcPtr, size = (nuint)input.Length, pos = 0 };
+                    ZSTD_outBuffer outputBuf = new() { dst = dstPtr, size = (nuint)destination.Length, pos = 0 };
+                    ZSTD_inBuffer inputBuf = new() { src = srcPtr, size = (nuint)source.Length, pos = 0 };
 
                     nuint status = ZSTD_decompressStream(dctx, &outputBuf, &inputBuf);
 
@@ -108,22 +115,25 @@ namespace SharpZstd
             }
         }
 
+        /// <include file="Docs.xml" path='//Params/DecodeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         public OperationStatus FlushStream(
-            Span<byte> output,
+            Span<byte> destination,
             out int written,
             out int inputHint,
             bool throwOnError = false)
         {
-            return DecompressStream(ReadOnlySpan<byte>.Empty, output, out written, out _, out inputHint, throwOnError);
+            return DecompressStream(ReadOnlySpan<byte>.Empty, destination, out written, out _, out inputHint, throwOnError);
         }
 
-        public void Reset(ZSTD_ResetDirective resetDirective)
+        /// <include file="Docs.xml" path='//Methods/Reset/*' />
+        public void Reset(ZSTD_ResetDirective directive = ZSTD_ResetDirective.ZSTD_reset_session_only)
         {
             DangerousAddRef();
             try
             {
                 ZSTD_DCtx* dctx = DangerousGetHandle();
-                nuint status = ZSTD_DCtx_reset(dctx, resetDirective);
+                nuint status = ZSTD_DCtx_reset(dctx, directive);
                 ZstdException.ThrowIfError(status);
             }
             finally
@@ -132,11 +142,102 @@ namespace SharpZstd
             }
         }
 
+        /// <inheritdoc/>
         protected override bool ReleaseHandle()
         {
             ZSTD_DCtx* dctx = DangerousGetHandle();
             nuint status = ZSTD_freeDCtx(dctx);
             return ZSTD_isError(status) == 0;
+        }
+
+        /// <summary>Attempts to find the compressed size of the first frame in the provided input.</summary>
+        /// <include file="Docs.xml" path='//Params/SingleFrameSpan/*' />
+        /// <param name="length">The compressed size of data in the first frame.</param>
+        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public static bool GetFrameCompressedLength(ReadOnlySpan<byte> source, out ulong length, bool throwOnError = false)
+        {
+            fixed (byte* srcPtr = source)
+            {
+                nuint result = ZSTD_findFrameCompressedSize(srcPtr, (nuint)source.Length);
+                if (ZSTD_isError(result) != 0)
+                {
+                    if (throwOnError)
+                    {
+                        ZstdException.Throw(result);
+                    }
+                    length = 0;
+                    return false;
+                }
+                length = result;
+                return true;
+            }
+        }
+
+        /// <summary>Attempts to find the content size of the first frame in the provided input.</summary>
+        /// <include file="Docs.xml" path='//Params/SingleFrameSpan/*' />
+        /// <param name="length">The content size of data in the first frame.</param>
+        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public static bool GetFrameContentLength(ReadOnlySpan<byte> source, out ulong length, bool throwOnError = false)
+        {
+            fixed (byte* srcPtr = source)
+            {
+                ulong result = ZSTD_getFrameContentSize(srcPtr, (nuint)source.Length);
+                return ValidateContentSize(result, out length, throwOnError);
+            }
+        }
+
+        /// <summary>Attempts to find the decompressed size for the provided input.</summary>
+        /// <include file="Docs.xml" path='//Params/MultiFrameSpan/*' />
+        /// <param name="length">The decompressed size of all data in all successive frames.</param>
+        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public static bool GetDecompressedLength(ReadOnlySpan<byte> source, out ulong length, bool throwOnError = false)
+        {
+            fixed (byte* srcPtr = source)
+            {
+                ulong result = ZSTD_findDecompressedSize(srcPtr, (nuint)source.Length);
+                return ValidateContentSize(result, out length, throwOnError);
+            }
+        }
+
+        /// <summary>Attempts to find the maximum decompressed size for the provided input.</summary>
+        /// <include file="Docs.xml" path='//Params/MultiFrameSpan/*' />
+        /// <param name="length">The upper-bound for the decompressed size of all data in all successive frames.</param>
+        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public static bool GetMaxDecompressedLength(ReadOnlySpan<byte> source, out ulong length, bool throwOnError = false)
+        {
+            fixed (byte* srcPtr = source)
+            {
+                ulong result = ZSTD_decompressBound(srcPtr, (nuint)source.Length);
+                return ValidateContentSize(result, out length, throwOnError);
+            }
+        }
+
+        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        private static bool ValidateContentSize(ulong result, out ulong length, bool throwOnError)
+        {
+            switch (result)
+            {
+                case ZSTD_CONTENTSIZE_ERROR:
+                    if (throwOnError)
+                    {
+                        ZstdException.Throw(ZSTD_ErrorCode.ZSTD_error_GENERIC);
+                    }
+                    length = 0;
+                    return false;
+
+                case ZSTD_CONTENTSIZE_UNKNOWN:
+                    length = ulong.MaxValue;
+                    return true;
+
+                default:
+                    length = result;
+                    return true;
+            }
         }
     }
 }

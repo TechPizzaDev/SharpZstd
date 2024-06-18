@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Zstd>
+
+  <Methods>
+
+    <Reset>
+      <summary>
+        Selectively resets the context.
+      </summary>
+
+      <remarks>
+        Resetting both is similar to first resetting the session, followed by resetting parameters.
+      </remarks>
+
+      <exception cref="global::SharpZstd.ZstdException">Attempt to reset parameters in an active session.</exception>
+    </Reset>
+
+  </Methods>
+
+  <Params>
+
+    <Encode>
+
+      <ConsumeSpan>
+        <param name="source">
+          A span containing the source data to compress.
+        </param>
+
+        <param name="consumed">
+          The total number of bytes that were read from <paramref name="source" />.
+        </param>
+      </ConsumeSpan>
+
+      <WriteSpan>
+        <param name="destination">
+          A span where the compressed data is stored.
+        </param>
+
+        <param name="written">
+          The total number of bytes that were written to <paramref name="destination" />.
+        </param>
+      </WriteSpan>
+
+      <ConsumeWriteSpans>
+        <include file="Docs.xml" path='//Params/Encode/ConsumeSpan/*' />
+        <include file="Docs.xml" path='//Params/Encode/WriteSpan/*' />
+      </ConsumeWriteSpans>
+
+      <CompressionLevel>
+        <param name="compressionLevel">
+          A number representing the level of compression. 1 is no compression.
+        </param>
+      </CompressionLevel>
+
+      <ConsumeSpan>
+        <param name="source">
+          A span containing the source data to compress.
+        </param>
+
+        <param name="consumed">
+          The total number of bytes that were read from <paramref name="source" />.
+        </param>
+      </ConsumeSpan>
+
+      <WriteSpan>
+        <param name="destination">
+          A span where the compressed data is stored.
+        </param>
+
+        <param name="written">
+          The total number of bytes that were written to <paramref name="destination" />.
+        </param>
+      </WriteSpan>
+
+      <ConsumeWriteSpans>
+        <include file="Docs.xml" path='//Params/Encode/ConsumeSpan/*' />
+        <include file="Docs.xml" path='//Params/Encode/WriteSpan/*' />
+      </ConsumeWriteSpans>
+
+    </Encode>
+
+    <Decode>
+
+      <ConsumeSpan>
+        <param name="source">
+          A span containing the source data to compress.
+        </param>
+
+        <param name="consumed">
+          The total number of bytes that were read from <paramref name="source" />.
+        </param>
+      </ConsumeSpan>
+
+      <WriteSpan>
+        <param name="destination">
+          A span where the compressed data is stored.
+        </param>
+
+        <param name="written">
+          The total number of bytes that were written to <paramref name="destination" />.
+        </param>
+      </WriteSpan>
+
+      <ConsumeWriteSpans>
+        <include file="Docs.xml" path='//Params/Decode/ConsumeSpan/*' />
+        <include file="Docs.xml" path='//Params/Decode/WriteSpan/*' />
+      </ConsumeWriteSpans>
+
+      <InputHint>
+        <param name="inputHint">
+          A suggested input size for the next read, never more than the remaining frame size.
+        </param>
+      </InputHint>
+      
+      <SingleFrameSpan>
+        <param name="source">
+          A span containing the starting bytes of a frame.
+        </param>
+      </SingleFrameSpan>
+
+      <MultiFrameSpan>
+        <param name="source">
+          A span containing the starting bytes of a series of frames.
+        </param>
+      </MultiFrameSpan>
+
+    </Decode>
+
+    <ThrowOnError>
+      <param name="throwOnError">
+        TODO
+      </param>
+    </ThrowOnError>
+
+  </Params>
+
+  <Returns>
+
+    <FullContextFlush>
+      <returns>
+        <see cref="OperationStatus.Done" /> if the context was fully flushed,
+        <see cref="OperationStatus.DestinationTooSmall" /> otherwise.
+      </returns>
+    </FullContextFlush>
+
+    <Status>
+
+      <Bool>
+        <returns>
+          <see langword="true" /> if the operation was successful;
+          <see langword="false" /> otherwise.
+        </returns>
+      </Bool>
+
+      <GenericOperation>
+        <returns>
+          <see cref="OperationStatus.Done" /> if the operation was successful;
+          <see cref="OperationStatus.DestinationTooSmall" /> otherwise.
+        </returns>
+      </GenericOperation>
+
+    </Status>
+
+  </Returns>
+
+</Zstd>
