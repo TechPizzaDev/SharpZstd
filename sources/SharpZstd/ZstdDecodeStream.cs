@@ -9,7 +9,7 @@ using SharpZstd.Interop;
 
 namespace SharpZstd
 {
-    public sealed class ZstdDecoderStream : Stream
+    public sealed class ZstdDecodeStream : Stream
     {
         private static readonly int DefaultBufferSize = (int) Zstd.ZSTD_DStreamInSize();
 
@@ -25,7 +25,7 @@ namespace SharpZstd
         private int _bufferPos;
         private bool _finished;
 
-        public ZstdDecoderStream(ZstdDecoder decoder, bool leaveDecoderOpen, Stream stream, bool leaveStreamOpen, bool consumeMultipleFrames)
+        public ZstdDecodeStream(ZstdDecoder decoder, bool leaveDecoderOpen, Stream stream, bool leaveStreamOpen, bool consumeMultipleFrames)
         {
             _decoder = decoder ?? throw new ArgumentNullException(nameof(decoder));
             _leaveDecoderOpen = leaveDecoderOpen;
@@ -38,7 +38,7 @@ namespace SharpZstd
             _bufferPos = 0;
         }
 
-        public ZstdDecoderStream(Stream stream, bool leaveOpen) : this(new ZstdDecoder(), false, stream, leaveOpen, true)
+        public ZstdDecodeStream(Stream stream, bool leaveOpen) : this(new ZstdDecoder(), false, stream, leaveOpen, true)
         {
         }
 

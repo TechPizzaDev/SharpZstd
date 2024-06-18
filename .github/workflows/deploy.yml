@@ -1,12 +1,14 @@
 name: deploy
 on:
-  create: # when tags are created
   workflow_dispatch: # clickable button in CI manager
+  release:
+    types: [published] # both release and prerelease
 
 env:
   VCPKG_INSTALLED_DIR: vcpkg_installed
   VCPKG_OVERLAY_PORTS: '${{ github.workspace }}/custom-ports'
   VCPKG_OVERLAY_TRIPLETS: '${{ github.workspace }}/custom-triplets'
+  GH_EVENT_PRERELEASE: '${{ github.event.release.prerelease }}'
 
 jobs:
 
@@ -137,7 +139,7 @@ jobs:
           dotnet-version: '8.0.x'
       
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: ${{ env.OUT_DIR }}/
           
@@ -159,7 +161,7 @@ jobs:
         run: dotnet pack -c Release --no-restore --no-build --verbosity normal
         
       - name: Upload Nuget artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pkg.Release
           path: artifacts/pkg/Release/*
