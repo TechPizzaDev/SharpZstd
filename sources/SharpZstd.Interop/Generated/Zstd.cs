@@ -294,6 +294,7 @@ namespace SharpZstd.Interop
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
+        [Obsolete("For debugging only, will be replaced by ZSTD_extractSequences()")]
         public static extern nuint ZSTD_generateSequences(ZSTD_CCtx* zc, ZSTD_Sequence* outSeqs, [NativeTypeName("size_t")] nuint outSeqsSize, [NativeTypeName("const void *")] void* src, [NativeTypeName("size_t")] nuint srcSize);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -318,7 +319,7 @@ namespace SharpZstd.Interop
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
-        public static extern nuint ZSTD_estimateCCtxSize(int compressionLevel);
+        public static extern nuint ZSTD_estimateCCtxSize(int maxCompressionLevel);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
@@ -334,7 +335,7 @@ namespace SharpZstd.Interop
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
-        public static extern nuint ZSTD_estimateCStreamSize(int compressionLevel);
+        public static extern nuint ZSTD_estimateCStreamSize(int maxCompressionLevel);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
@@ -346,7 +347,7 @@ namespace SharpZstd.Interop
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
-        public static extern nuint ZSTD_estimateDStreamSize([NativeTypeName("size_t")] nuint windowSize);
+        public static extern nuint ZSTD_estimateDStreamSize([NativeTypeName("size_t")] nuint maxWindowSize);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
@@ -605,7 +606,10 @@ namespace SharpZstd.Interop
         public static extern nuint ZSTD_resetDStream([NativeTypeName("ZSTD_DStream *")] ZSTD_DCtx* zds);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void ZSTD_registerSequenceProducer(ZSTD_CCtx* cctx, void* sequenceProducerState, [NativeTypeName("ZSTD_sequenceProducer_F *")] delegate* unmanaged[Cdecl]<void*, ZSTD_Sequence*, nuint, void*, nuint, void*, nuint, int, nuint, nuint> sequenceProducer);
+        public static extern void ZSTD_registerSequenceProducer(ZSTD_CCtx* cctx, void* sequenceProducerState, [NativeTypeName("ZSTD_sequenceProducer_F")] delegate* unmanaged[Cdecl]<void*, ZSTD_Sequence*, nuint, void*, nuint, void*, nuint, int, nuint, nuint> sequenceProducer);
+
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void ZSTD_CCtxParams_registerSequenceProducer(ZSTD_CCtx_params* @params, void* sequenceProducerState, [NativeTypeName("ZSTD_sequenceProducer_F")] delegate* unmanaged[Cdecl]<void*, ZSTD_Sequence*, nuint, void*, nuint, void*, nuint, int, nuint, nuint> sequenceProducer);
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
@@ -704,14 +708,14 @@ namespace SharpZstd.Interop
         [NativeTypeName("#define ZSTD_VERSION_MINOR 5")]
         public const int ZSTD_VERSION_MINOR = 5;
 
-        [NativeTypeName("#define ZSTD_VERSION_RELEASE 5")]
-        public const int ZSTD_VERSION_RELEASE = 5;
+        [NativeTypeName("#define ZSTD_VERSION_RELEASE 6")]
+        public const int ZSTD_VERSION_RELEASE = 6;
 
         [NativeTypeName("#define ZSTD_VERSION_NUMBER (ZSTD_VERSION_MAJOR *100*100 + ZSTD_VERSION_MINOR *100 + ZSTD_VERSION_RELEASE)")]
-        public const int ZSTD_VERSION_NUMBER = (1 * 100 * 100 + 5 * 100 + 5);
+        public const int ZSTD_VERSION_NUMBER = (1 * 100 * 100 + 5 * 100 + 6);
 
         [NativeTypeName("#define ZSTD_VERSION_STRING ZSTD_EXPAND_AND_QUOTE(ZSTD_LIB_VERSION)")]
-        public static ReadOnlySpan<byte> ZSTD_VERSION_STRING => "1.5.5"u8;
+        public static ReadOnlySpan<byte> ZSTD_VERSION_STRING => "1.5.6"u8;
 
         [NativeTypeName("#define ZSTD_CLEVEL_DEFAULT 3")]
         public const int ZSTD_CLEVEL_DEFAULT = 3;
@@ -740,7 +744,7 @@ namespace SharpZstd.Interop
         [NativeTypeName("#define ZSTD_CONTENTSIZE_ERROR (0ULL - 2)")]
         public const ulong ZSTD_CONTENTSIZE_ERROR = unchecked(0UL - 2);
 
-        [NativeTypeName("#define ZSTD_MAX_INPUT_SIZE ((sizeof(size_t)==8) ? 0xFF00FF00FF00FF00LLU : 0xFF00FF00U)")]
+        [NativeTypeName("#define ZSTD_MAX_INPUT_SIZE ((sizeof(size_t)==8) ? 0xFF00FF00FF00FF00ULL : 0xFF00FF00U)")]
         public static readonly ulong ZSTD_MAX_INPUT_SIZE = ((sizeof(nuint) == 8) ? 0xFF00FF00FF00FF00UL : 0xFF00FF00U);
 
         [NativeTypeName("#define ZSTD_FRAMEHEADERSIZE_MAX 18")]
@@ -839,8 +843,8 @@ namespace SharpZstd.Interop
         [NativeTypeName("#define ZSTD_LDM_HASHRATELOG_MAX (ZSTD_WINDOWLOG_MAX - ZSTD_HASHLOG_MIN)")]
         public static readonly int ZSTD_LDM_HASHRATELOG_MAX = (((int)(sizeof(nuint) == 4 ? 30 : 31)) - 6);
 
-        [NativeTypeName("#define ZSTD_TARGETCBLOCKSIZE_MIN 64")]
-        public const int ZSTD_TARGETCBLOCKSIZE_MIN = 64;
+        [NativeTypeName("#define ZSTD_TARGETCBLOCKSIZE_MIN 1340")]
+        public const int ZSTD_TARGETCBLOCKSIZE_MIN = 1340;
 
         [NativeTypeName("#define ZSTD_TARGETCBLOCKSIZE_MAX ZSTD_BLOCKSIZE_MAX")]
         public const int ZSTD_TARGETCBLOCKSIZE_MAX = (1 << 17);
@@ -865,9 +869,6 @@ namespace SharpZstd.Interop
 
         [NativeTypeName("#define ZSTD_c_literalCompressionMode ZSTD_c_experimentalParam5")]
         public const ZSTD_cParameter ZSTD_c_literalCompressionMode = ZSTD_c_experimentalParam5;
-
-        [NativeTypeName("#define ZSTD_c_targetCBlockSize ZSTD_c_experimentalParam6")]
-        public const ZSTD_cParameter ZSTD_c_targetCBlockSize = ZSTD_c_experimentalParam6;
 
         [NativeTypeName("#define ZSTD_c_srcSizeHint ZSTD_c_experimentalParam7")]
         public const ZSTD_cParameter ZSTD_c_srcSizeHint = ZSTD_c_experimentalParam7;
@@ -922,6 +923,9 @@ namespace SharpZstd.Interop
 
         [NativeTypeName("#define ZSTD_d_disableHuffmanAssembly ZSTD_d_experimentalParam5")]
         public const ZSTD_dParameter ZSTD_d_disableHuffmanAssembly = ZSTD_d_experimentalParam5;
+
+        [NativeTypeName("#define ZSTD_d_maxBlockSize ZSTD_d_experimentalParam6")]
+        public const ZSTD_dParameter ZSTD_d_maxBlockSize = ZSTD_d_experimentalParam6;
 
         [NativeTypeName("#define ZSTD_SEQUENCE_PRODUCER_ERROR ((size_t)(-1))")]
         public static readonly nuint ZSTD_SEQUENCE_PRODUCER_ERROR = unchecked((nuint)(-1));
