@@ -1,6 +1,6 @@
 {
   "name": "main",
-  "version-semver": "1.5.5-beta2",
+  "version": "1.5.6.0",
   "dependencies": [
     {
       "name": "zstd"
