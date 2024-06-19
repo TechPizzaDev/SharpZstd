@@ -41,6 +41,7 @@ namespace SharpZstd.Interop
         [return: NativeTypeName("size_t")]
         public static extern nuint ZSTD_compressBound([NativeTypeName("size_t")] nuint srcSize);
 
+        [SuppressGCTransition]
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint ZSTD_isError([NativeTypeName("size_t")] nuint code);
@@ -929,7 +930,8 @@ namespace SharpZstd.Interop
 
         [NativeTypeName("#define ZSTD_SEQUENCE_PRODUCER_ERROR ((size_t)(-1))")]
         public static readonly nuint ZSTD_SEQUENCE_PRODUCER_ERROR = unchecked((nuint)(-1));
-
+        
+        [SuppressGCTransition]
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ZSTD_ErrorCode ZSTD_getErrorCode([NativeTypeName("size_t")] nuint functionResult);
 
