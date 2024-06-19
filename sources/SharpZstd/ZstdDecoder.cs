@@ -81,7 +81,7 @@ namespace SharpZstd
                 DangerousRelease();
             }
         }
-        
+
         /// <summary>
         /// Tries to decompress a source span into a destination span.
         /// </summary>
@@ -250,13 +250,14 @@ namespace SharpZstd
         /// <summary>Tries to decompress a source span into a destination span.</summary>
         /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
-        public static bool TryDecompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
+        public static OperationStatus TryDecompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
         {
             fixed (byte* srcPtr = source)
             fixed (byte* dstPtr = destination)
             {
                 nuint result = ZSTD_decompress(dstPtr, (nuint)destination.Length, srcPtr, (nuint)source.Length);
-                return ResultToStatus(result, out written) == OperationStatus.Done;
+                OperationStatus status = ResultToStatus(result, out written);
+                return status;
             }
         }
 

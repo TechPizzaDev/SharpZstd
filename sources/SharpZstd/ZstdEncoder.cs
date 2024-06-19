@@ -192,7 +192,7 @@ namespace SharpZstd
                 DangerousRelease();
             }
         }
-        
+
         /// <inheritdoc/>
         protected override bool ReleaseHandle()
         {
@@ -215,7 +215,7 @@ namespace SharpZstd
         /// <summary>Tries to compress a source span into a destination span.</summary>
         /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
-        public static bool TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
+        public static OperationStatus TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
         {
             return TryCompress(source, destination, out written, DefaultLevel);
         }
@@ -224,14 +224,14 @@ namespace SharpZstd
         /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
         /// <include file='Docs.xml' path='//Params/Encode/CompressionLevel'/>
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
-        public static bool TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written, int compressionLevel)
+        public static OperationStatus TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written, int compressionLevel)
         {
             fixed (byte* srcPtr = source)
             fixed (byte* dstPtr = destination)
             {
                 nuint result = ZSTD_compress(dstPtr, (nuint)destination.Length, srcPtr, (nuint)source.Length, compressionLevel);
                 OperationStatus status = ResultToStatus(result, out written);
-                return status == OperationStatus.Done;
+                return status;
             }
         }
 
