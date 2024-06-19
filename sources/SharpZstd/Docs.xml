@@ -83,7 +83,7 @@
 
       <ConsumeSpan>
         <param name="source">
-          A span containing the source data to compress.
+          A span containing the source data to decompress.
         </param>
 
         <param name="consumed">
@@ -93,7 +93,7 @@
 
       <WriteSpan>
         <param name="destination">
-          A span where the compressed data is stored.
+          A span where the decompressed data is stored.
         </param>
 
         <param name="written">
@@ -128,7 +128,8 @@
 
     <ThrowOnError>
       <param name="throwOnError">
-        TODO
+        <see langword="true" /> to throw an exception on failure, possibly with an error code and message.
+        <see langword="false" /> to not throw exceptions on failure.
       </param>
     </ThrowOnError>
 

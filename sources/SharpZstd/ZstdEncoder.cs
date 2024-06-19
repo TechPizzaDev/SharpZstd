@@ -213,7 +213,7 @@ namespace SharpZstd
         }
 
         /// <summary>Tries to compress a source span into a destination span.</summary>
-        /// <include file="Docs.xml" path='//Params/EncodeConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         public static bool TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
         {

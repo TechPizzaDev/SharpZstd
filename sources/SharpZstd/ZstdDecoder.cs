@@ -81,7 +81,10 @@ namespace SharpZstd
                 DangerousRelease();
             }
         }
-
+        
+        /// <summary>
+        /// Tries to decompress a source span into a destination span.
+        /// </summary>
         /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
         /// <include file="Docs.xml" path='//Params/Decode/InputHint/*' />
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
@@ -139,6 +142,9 @@ namespace SharpZstd
             }
         }
 
+        /// <summary>
+        /// Tries to flush decompressed data into a destination span.
+        /// </summary>
         /// <include file="Docs.xml" path='//Params/DecodeWriteSpans/*' />
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         public OperationStatus FlushStream(
@@ -175,8 +181,8 @@ namespace SharpZstd
         }
 
         /// <summary>Attempts to find the compressed size of the first frame in the provided input.</summary>
-        /// <include file="Docs.xml" path='//Params/SingleFrameSpan/*' />
-        /// <param name="length">The compressed size of data in the first frame.</param>
+        /// <include file="Docs.xml" path='//Params/Decode/SingleFrameSpan/*' />
+        /// <param name="length">The compressed size of the first frame.</param>
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         public static bool GetFrameCompressedLength(ReadOnlySpan<byte> source, out ulong length, bool throwOnError = false)
@@ -200,8 +206,8 @@ namespace SharpZstd
         }
 
         /// <summary>Attempts to find the content size of the first frame in the provided input.</summary>
-        /// <include file="Docs.xml" path='//Params/SingleFrameSpan/*' />
-        /// <param name="length">The content size of data in the first frame.</param>
+        /// <include file="Docs.xml" path='//Params/Decode/SingleFrameSpan/*' />
+        /// <param name="length">The content size of the first frame.</param>
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         public static bool GetFrameContentLength(ReadOnlySpan<byte> source, out ulong length, bool throwOnError = false)
@@ -214,7 +220,7 @@ namespace SharpZstd
         }
 
         /// <summary>Attempts to find the decompressed size for the provided input.</summary>
-        /// <include file="Docs.xml" path='//Params/MultiFrameSpan/*' />
+        /// <include file="Docs.xml" path='//Params/Decode/MultiFrameSpan/*' />
         /// <param name="length">The decompressed size of all data in all successive frames.</param>
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
@@ -228,7 +234,7 @@ namespace SharpZstd
         }
 
         /// <summary>Attempts to find the maximum decompressed size for the provided input.</summary>
-        /// <include file="Docs.xml" path='//Params/MultiFrameSpan/*' />
+        /// <include file="Docs.xml" path='//Params/Decode/MultiFrameSpan/*' />
         /// <param name="length">The upper-bound for the decompressed size of all data in all successive frames.</param>
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
