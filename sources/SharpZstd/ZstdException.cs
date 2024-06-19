@@ -54,18 +54,18 @@ namespace SharpZstd
 
         public static void ThrowIfError(nuint functionResult)
         {
-            if (ZSTD_isError(functionResult) != 0)
+            ZSTD_ErrorCode code = ZSTD_getErrorCode(functionResult);
+            if (code != ZSTD_ErrorCode.ZSTD_error_no_error)
             {
-                Throw(functionResult);
+                Throw(code);
             }
         }
 
         [DoesNotReturn]
         public static unsafe void Throw(nuint functionResult)
         {
-            string? message = GetString(ZSTD_getErrorName(functionResult));
             ZSTD_ErrorCode code = ZSTD_getErrorCode(functionResult);
-            throw new ZstdException(message, null, code);
+            Throw(code);
         }
 
         [DoesNotReturn]

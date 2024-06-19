@@ -237,19 +237,20 @@ namespace SharpZstd
 
         private static OperationStatus ResultToStatus(nuint result, out int written)
         {
-            if (ZSTD_isError(result) == 0)
+            ZSTD_ErrorCode errorCode = ZSTD_getErrorCode(result);
+            if (errorCode == ZSTD_ErrorCode.ZSTD_error_no_error)
             {
                 written = (int)result;
                 return OperationStatus.Done;
             }
 
-            if (ZSTD_getErrorCode(result) == ZSTD_ErrorCode.ZSTD_error_dstSize_tooSmall)
+            if (errorCode == ZSTD_ErrorCode.ZSTD_error_dstSize_tooSmall)
             {
                 written = 0;
                 return OperationStatus.DestinationTooSmall;
             }
 
-            ZstdException.Throw(result);
+            ZstdException.Throw(errorCode);
 
             written = 0;
             return OperationStatus.InvalidData;

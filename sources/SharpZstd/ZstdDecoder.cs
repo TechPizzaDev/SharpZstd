@@ -81,7 +81,7 @@ namespace SharpZstd
                 DangerousRelease();
             }
         }
-        
+
         /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
         /// <include file="Docs.xml" path='//Params/Decode/InputHint/*' />
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
@@ -109,11 +109,12 @@ namespace SharpZstd
                     written = (int)outputBuf.pos;
                     consumed = (int)inputBuf.pos;
 
-                    if (ZSTD_isError(status) != 0)
+                    ZSTD_ErrorCode code = ZSTD_getErrorCode(status);
+                    if (code != ZSTD_ErrorCode.ZSTD_error_no_error)
                     {
                         if (throwOnError)
                         {
-                            ZstdException.Throw(status);
+                            ZstdException.Throw(code);
                         }
                         inputHint = 0;
                         return OperationStatus.InvalidData;
@@ -183,11 +184,12 @@ namespace SharpZstd
             fixed (byte* srcPtr = source)
             {
                 nuint result = ZSTD_findFrameCompressedSize(srcPtr, (nuint)source.Length);
-                if (ZSTD_isError(result) != 0)
+                ZSTD_ErrorCode code = ZSTD_getErrorCode(result);
+                if (code != ZSTD_ErrorCode.ZSTD_error_no_error)
                 {
                     if (throwOnError)
                     {
-                        ZstdException.Throw(result);
+                        ZstdException.Throw(code);
                     }
                     length = 0;
                     return false;
