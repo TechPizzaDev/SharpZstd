@@ -59,6 +59,29 @@ namespace SharpZstd
             }
         }
 
+        /// <summary>Tries to decompress a source span into a destination span.</summary>
+        /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public OperationStatus Decompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
+        {
+            DangerousAddRef();
+            try
+            {
+                ZSTD_DCtx* dctx = DangerousGetHandle();
+
+                fixed (byte* srcPtr = source)
+                fixed (byte* dstPtr = destination)
+                {
+                    nuint result = ZSTD_decompressDCtx(dctx, dstPtr, (nuint)destination.Length, srcPtr, (nuint)source.Length);
+                    return ResultToStatus(result, out written);
+                }
+            }
+            finally
+            {
+                DangerousRelease();
+            }
+        }
+        
         /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
         /// <include file="Docs.xml" path='//Params/Decode/InputHint/*' />
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
@@ -216,6 +239,19 @@ namespace SharpZstd
             }
         }
 
+        /// <summary>Tries to decompress a source span into a destination span.</summary>
+        /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
+        public static bool TryDecompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
+        {
+            fixed (byte* srcPtr = source)
+            fixed (byte* dstPtr = destination)
+            {
+                nuint result = ZSTD_decompress(dstPtr, (nuint)destination.Length, srcPtr, (nuint)source.Length);
+                return ResultToStatus(result, out written) == OperationStatus.Done;
+            }
+        }
+
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         private static bool ValidateContentSize(ulong result, out ulong length, bool throwOnError)
@@ -238,6 +274,24 @@ namespace SharpZstd
                     length = result;
                     return true;
             }
+        }
+
+        private static OperationStatus ResultToStatus(nuint result, out int written)
+        {
+            ZSTD_ErrorCode errorCode = ZSTD_getErrorCode(result);
+            if (errorCode == ZSTD_ErrorCode.ZSTD_error_no_error)
+            {
+                written = (int)result;
+                return OperationStatus.Done;
+            }
+
+            written = 0;
+            return errorCode switch
+            {
+                ZSTD_ErrorCode.ZSTD_error_dstSize_tooSmall => OperationStatus.DestinationTooSmall,
+                ZSTD_ErrorCode.ZSTD_error_srcSize_wrong => OperationStatus.NeedMoreData,
+                _ => OperationStatus.InvalidData,
+            };
         }
     }
 }
