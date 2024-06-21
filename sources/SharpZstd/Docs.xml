@@ -21,10 +21,14 @@
 
     <Encode>
 
-      <ConsumeSpan>
+      <SourceSpan>
         <param name="source">
           A span containing the source data to compress.
         </param>
+      </SourceSpan>
+      
+      <ConsumeSpan>
+        <include file="Docs.xml" path='//Params/Encode/SourceSpan/*' />
 
         <param name="consumed">
           The total number of bytes that were read from <paramref name="source" />.
@@ -45,6 +49,11 @@
         <include file="Docs.xml" path='//Params/Encode/ConsumeSpan/*' />
         <include file="Docs.xml" path='//Params/Encode/WriteSpan/*' />
       </ConsumeWriteSpans>
+
+      <SourceWriteSpans>
+        <include file="Docs.xml" path='//Params/Encode/SourceSpan/*' />
+        <include file="Docs.xml" path='//Params/Encode/WriteSpan/*' />
+      </SourceWriteSpans>
 
       <CompressionLevel>
         <param name="compressionLevel">
@@ -52,40 +61,26 @@
         </param>
       </CompressionLevel>
 
-      <ConsumeSpan>
-        <param name="source">
-          A span containing the source data to compress.
+      <FinalBlock>
+        <param name="isFinalBlock">
+          <see langword="true" /> to end and flush the frame;
+          <see langword="false" /> to only flush.
         </param>
-
-        <param name="consumed">
-          The total number of bytes that were read from <paramref name="source" />.
-        </param>
-      </ConsumeSpan>
-
-      <WriteSpan>
-        <param name="destination">
-          A span where the compressed data is stored.
-        </param>
-
-        <param name="written">
-          The total number of bytes that were written to <paramref name="destination" />.
-        </param>
-      </WriteSpan>
-
-      <ConsumeWriteSpans>
-        <include file="Docs.xml" path='//Params/Encode/ConsumeSpan/*' />
-        <include file="Docs.xml" path='//Params/Encode/WriteSpan/*' />
-      </ConsumeWriteSpans>
+      </FinalBlock>
 
     </Encode>
 
     <Decode>
 
-      <ConsumeSpan>
+      <SourceSpan>
         <param name="source">
           A span containing the source data to decompress.
         </param>
-
+      </SourceSpan>
+      
+      <ConsumeSpan>
+        <include file="Docs.xml" path='//Params/Decode/SourceSpan/*' />
+        
         <param name="consumed">
           The total number of bytes that were read from <paramref name="source" />.
         </param>
@@ -105,6 +100,11 @@
         <include file="Docs.xml" path='//Params/Decode/ConsumeSpan/*' />
         <include file="Docs.xml" path='//Params/Decode/WriteSpan/*' />
       </ConsumeWriteSpans>
+
+      <SourceWriteSpans>
+        <include file="Docs.xml" path='//Params/Decode/SourceSpan/*' />
+        <include file="Docs.xml" path='//Params/Decode/WriteSpan/*' />
+      </SourceWriteSpans>
 
       <InputHint>
         <param name="inputHint">

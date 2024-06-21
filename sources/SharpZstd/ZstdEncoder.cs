@@ -21,6 +21,7 @@ namespace SharpZstd
         {
         }
 
+        /// <inheritdoc/>
         public override bool IsInvalid => handle == IntPtr.Zero;
 
         private static ZSTD_CCtx* CreateHandle()
@@ -65,7 +66,7 @@ namespace SharpZstd
         /// <summary>
         /// Tries to compress a source span into a destination span.
         /// </summary>
-        /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Encode/SourceWriteSpans/*' />
         /// <include file="Docs.xml" path='//Returns/Status/GenericOperation/*' />
         public OperationStatus Compress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
         {
@@ -213,7 +214,7 @@ namespace SharpZstd
         }
 
         /// <summary>Tries to compress a source span into a destination span.</summary>
-        /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Encode/SourceWriteSpans/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         public static OperationStatus TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
         {
@@ -221,7 +222,7 @@ namespace SharpZstd
         }
 
         /// <summary>Tries to compress a source span into a destination span.</summary>
-        /// <include file="Docs.xml" path='//Params/Encode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Encode/SourceWriteSpans/*' />
         /// <include file='Docs.xml' path='//Params/Encode/CompressionLevel'/>
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         public static OperationStatus TryCompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written, int compressionLevel)

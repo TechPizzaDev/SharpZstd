@@ -60,7 +60,7 @@ namespace SharpZstd
         }
 
         /// <summary>Tries to decompress a source span into a destination span.</summary>
-        /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Decode/SourceWriteSpans/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         public OperationStatus Decompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
         {
@@ -73,7 +73,8 @@ namespace SharpZstd
                 fixed (byte* dstPtr = destination)
                 {
                     nuint result = ZSTD_decompressDCtx(dctx, dstPtr, (nuint)destination.Length, srcPtr, (nuint)source.Length);
-                    return ResultToStatus(result, out written);
+                    OperationStatus status = ResultToStatus(result, out written);
+                    return status;
                 }
             }
             finally
@@ -145,7 +146,8 @@ namespace SharpZstd
         /// <summary>
         /// Tries to flush decompressed data into a destination span.
         /// </summary>
-        /// <include file="Docs.xml" path='//Params/DecodeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Decode/WriteSpan/*' />
+        /// <include file="Docs.xml" path='//Params/Decode/InputHint/*' />
         /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
         public OperationStatus FlushStream(
             Span<byte> destination,
@@ -248,7 +250,7 @@ namespace SharpZstd
         }
 
         /// <summary>Tries to decompress a source span into a destination span.</summary>
-        /// <include file="Docs.xml" path='//Params/Decode/ConsumeWriteSpans/*' />
+        /// <include file="Docs.xml" path='//Params/Decode/SourceWriteSpans/*' />
         /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         public static OperationStatus TryDecompress(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
         {
@@ -261,8 +263,6 @@ namespace SharpZstd
             }
         }
 
-        /// <include file="Docs.xml" path='//Params/ThrowOnError/*' />
-        /// <include file="Docs.xml" path='//Returns/Status/Bool/*' />
         private static bool ValidateContentSize(ulong result, out ulong length, bool throwOnError)
         {
             switch (result)

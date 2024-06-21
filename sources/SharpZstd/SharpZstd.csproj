@@ -5,13 +5,15 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>11</LangVersion>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Content Include="Docs.xml" />
-    </ItemGroup>
-    
-    <ItemGroup>
+  <ItemGroup>
+    <None Include="Docs.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
         <ProjectReference Include="..\SharpZstd.Interop\SharpZstd.Interop.csproj" />
     </ItemGroup>
 
